@@ -1,0 +1,32 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(7 26 39 / 0.6);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+  background: var(--sand-50);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.modal-wide {
+  max-width: 760px;
+}
+
+@media (max-width: 600px) {
+  .modal {
+    padding: 22px 18px;
+  }
+}

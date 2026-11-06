@@ -1,0 +1,280 @@
+/* ── Hero ───────────────────────────────────────────────────── */
+
+.hero {
+  background:
+    radial-gradient(ellipse at 80% 20%, rgb(29 122 140 / 0.45), transparent 60%),
+    linear-gradient(180deg, var(--ocean-900), var(--ocean-800));
+  color: white;
+  padding: 64px 0 80px;
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero .kicker {
+  color: var(--sea-300);
+}
+
+.hero h1 {
+  font-size: clamp(2.3rem, 4.4vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--sun-400);
+}
+
+.hero-lede {
+  font-size: 1.12rem;
+  color: rgb(255 255 255 / 0.78);
+  max-width: 500px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 0 16px;
+}
+
+.hero-meta {
+  font-size: 0.88rem;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.hero-map-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.hero-caption {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: rgb(7 26 39 / 0.7);
+  backdrop-filter: blur(6px);
+  font-size: 0.92rem;
+}
+
+.scene-tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.scene-tabs button {
+  background: rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.75);
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.scene-tabs button.active {
+  background: white;
+  color: var(--ocean-900);
+}
+
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Sections ───────────────────────────────────────────────── */
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  max-width: 640px;
+}
+
+.section-lede {
+  font-size: 1.08rem;
+  color: var(--ink-700);
+  max-width: 620px;
+  margin-bottom: 32px;
+}
+
+.section-sand {
+  background: var(--sand-200);
+}
+
+.section-ocean {
+  background: var(--ocean-700);
+  color: white;
+}
+
+.section-ocean .kicker {
+  color: var(--sea-300);
+}
+
+.section-ocean a {
+  color: var(--sun-400);
+}
+
+/* ── Steps ──────────────────────────────────────────────────── */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.step {
+  position: relative;
+}
+
+.step-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.step-num {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--sand-300);
+}
+
+.step h3 {
+  font-size: 1.25rem;
+}
+
+.step p {
+  color: var(--ink-700);
+  margin: 0;
+}
+
+/* ── SDG tiles ──────────────────────────────────────────────── */
+
+.sdg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.sdg-tile {
+  display: flex;
+  gap: 16px;
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  border-left: 6px solid var(--sdg);
+  box-shadow: var(--shadow-sm);
+}
+
+.sdg-tile-num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--sdg);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.sdg-tile h3 {
+  font-size: 1.08rem;
+  margin-bottom: 6px;
+}
+
+.sdg-tile p {
+  font-size: 0.92rem;
+  color: var(--ink-700);
+  margin: 0;
+}
+
+/* ── Citizens ───────────────────────────────────────────────── */
+
+.citizens-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+.citizen-card {
+  text-align: center;
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.citizen-card h3 {
+  margin: 14px 0 2px;
+  font-size: 1.15rem;
+}
+
+.citizen-cares {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  background: var(--sand-100);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+/* ── Why ────────────────────────────────────────────────────── */
+
+.why {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+}
+
+.why h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+}
+
+.why p {
+  color: rgb(255 255 255 / 0.82);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 800px) {
+  .why {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* ── Final CTA ──────────────────────────────────────────────── */
+
+.final-cta {
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin-bottom: 24px;
+}

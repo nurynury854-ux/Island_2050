@@ -1,0 +1,326 @@
+/* Shared styles for the content pages: Learn, SDGs, Hall, About */
+
+.content-page {
+  padding-bottom: 80px;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.filter-row button {
+  background: white;
+  border: 2px solid var(--sand-300);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ink-700);
+}
+
+.filter-row button.active {
+  background: var(--ocean-700);
+  border-color: var(--ocean-700);
+  color: white;
+}
+
+.wip-banner {
+  background: #fff4dc;
+  border: 1px dashed #e0b85c;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.95rem;
+}
+
+.content-cta {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.placeholder {
+  background: var(--sand-100);
+  border: 1px dashed var(--sand-300);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--ink-700);
+}
+
+/* ── Learn ──────────────────────────────────────────────────── */
+
+.learn-list {
+  display: grid;
+  gap: 20px;
+}
+
+.learn-card {
+  scroll-margin-top: calc(var(--nav-height) + 16px);
+}
+
+.learn-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.learn-head .kicker {
+  margin-bottom: 0;
+}
+
+.learn-head h2 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.learn-icon {
+  font-size: 2.4rem;
+}
+
+.learn-sdgs {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.learn-summary {
+  font-size: 1.05rem;
+  margin: 14px 0 18px;
+}
+
+.learn-cols {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 860px) {
+  .learn-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.learn-box {
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+
+.learn-box h3 {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.learn-box p {
+  font-size: 0.92rem;
+  margin-bottom: 6px;
+}
+
+.learn-real {
+  background: var(--sea-100);
+}
+
+.learn-trade {
+  background: #fdeee9;
+}
+
+.learn-game {
+  background: var(--sand-100);
+}
+
+.learn-game .effects {
+  margin-bottom: 4px;
+}
+
+/* ── SDGs ───────────────────────────────────────────────────── */
+
+.sdg-detail-list {
+  display: grid;
+  gap: 18px;
+}
+
+.sdg-detail {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.sdg-detail-badge {
+  background: var(--sdg);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sdg-detail-badge span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.sdg-detail-badge b {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.sdg-detail-body {
+  padding: 22px 24px;
+}
+
+.sdg-detail-body h2 {
+  font-size: 1.5rem;
+}
+
+.sdg-detail-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 1px solid var(--sand-200);
+  padding-top: 14px;
+}
+
+.sdg-detail-meta h3 {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-500);
+  margin-bottom: 4px;
+}
+
+.sdg-detail-meta p {
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.sdg-detail-meta a {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .sdg-detail {
+    grid-template-columns: 1fr;
+  }
+  .sdg-detail-badge {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 12px 20px;
+  }
+  .sdg-detail-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sdg-tradeoffs {
+  border-left: 6px solid var(--sun-400);
+}
+
+/* ── Hall ───────────────────────────────────────────────────── */
+
+.hall {
+  display: grid;
+  gap: 20px;
+}
+
+.hall-empty {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.hall-empty-icon {
+  font-size: 3rem;
+}
+
+.hall-table-wrap {
+  overflow-x: auto;
+}
+
+.hall-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.hall-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-500);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--sand-200);
+}
+
+.hall-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--sand-200);
+}
+
+.hall-score {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.ending-pill {
+  display: inline-block;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.hall-clear {
+  margin-top: 16px;
+  color: var(--ink-500);
+}
+
+/* ── About ──────────────────────────────────────────────────── */
+
+.about {
+  display: grid;
+  gap: 20px;
+  max-width: 820px;
+}
+
+.about h2 {
+  font-size: 1.5rem;
+}
+
+.about-creator {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .about-creator {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.tech-list {
+  padding-left: 20px;
+  display: grid;
+  gap: 4px;
+}

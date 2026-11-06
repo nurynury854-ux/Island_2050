@@ -1,0 +1,278 @@
+/* ─────────────────────────────────────────────────────────────
+   DESIGN SYSTEM: colors, fonts and shared building blocks.
+   Change a color here and it updates across the whole site.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Ocean */
+  --ocean-950: #071a27;
+  --ocean-900: #0b2233;
+  --ocean-800: #0f3247;
+  --ocean-700: #12415a;
+  --ocean-500: #1d7a8c;
+  --sea-300: #7cc6c9;
+  --sea-100: #d6eef0;
+
+  /* Land */
+  --sand-50: #fdfaf3;
+  --sand-100: #fbf5e8;
+  --sand-200: #f2e6cc;
+  --sand-300: #e4d2ab;
+  --leaf-500: #3f9b5a;
+  --leaf-700: #2a6b3e;
+
+  /* Accents */
+  --sun-400: #f4b740;
+  --coral-500: #e0603f;
+
+  /* Text */
+  --ink-900: #1d2a33;
+  --ink-700: #3a4a55;
+  --ink-500: #64747e;
+  --ink-300: #a9b4ba;
+
+  /* Meaning */
+  --good: #2f9d5b;
+  --bad: #d4553a;
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 1px 2px rgb(11 34 51 / 0.08), 0 2px 6px rgb(11 34 51 / 0.06);
+  --shadow: 0 4px 12px rgb(11 34 51 / 0.08), 0 12px 32px rgb(11 34 51 / 0.08);
+  --shadow-lg: 0 20px 60px rgb(7 26 39 / 0.35);
+
+  --page-width: 1120px;
+  --nav-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--sand-100);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--ocean-500);
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sun-400);
+  outline-offset: 2px;
+}
+
+/* ── Layout helpers ─────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.kicker {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ocean-500);
+  margin-bottom: 10px;
+}
+
+.page-header {
+  padding: 56px 0 32px;
+}
+
+.page-header h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+}
+
+.page-header p {
+  font-size: 1.15rem;
+  color: var(--ink-700);
+  max-width: 640px;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--sun-400);
+  color: var(--ocean-950);
+  box-shadow: 0 4px 0 #c98f1f;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #f7c55e;
+}
+
+.btn-dark {
+  background: var(--ocean-700);
+  color: white;
+}
+
+.btn-dark:hover:not(:disabled) {
+  background: var(--ocean-800);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: currentColor;
+  color: inherit;
+}
+
+.btn-lg {
+  padding: 16px 30px;
+  font-size: 1.1rem;
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 0.88rem;
+}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+}
+
+/* ── SDG chip ───────────────────────────────────────────────── */
+
+.sdg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 4px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+}
+
+.sdg-chip b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.18);
+  font-size: 0.72rem;
+}
+
+/* ── Effect arrows (▲ +5 Economy) ───────────────────────────── */
+
+.effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 0.82rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.effects li {
+  white-space: nowrap;
+}
+
+.effects .good {
+  color: var(--good);
+}
+
+.effects .bad {
+  color: var(--bad);
+}
+
+.muted {
+  color: var(--ink-500);
+}

@@ -1,0 +1,80 @@
+.island-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Waves bob left and right */
+.island-map .waves path {
+  animation: wave 4s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from {
+    transform: translateX(-6px);
+  }
+  to {
+    transform: translateX(6px);
+  }
+}
+
+/* Smoke puffs rise and fade */
+.island-map .smoke circle {
+  animation: smoke 3s ease-out infinite;
+  opacity: 0;
+  transform-box: fill-box; /* scale each puff around its own center */
+  transform-origin: center;
+}
+
+@keyframes smoke {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(18px, -46px) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Clouds drift across the sky */
+.island-map .cloud {
+  animation: drift 60s linear infinite;
+}
+
+.island-map .cloud-1 {
+  transform: translate(-80px, 70px);
+}
+
+.island-map .cloud-2 {
+  animation-duration: 85s;
+  animation-delay: -40s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(-80px, 70px);
+  }
+  to {
+    transform: translate(900px, 40px);
+  }
+}
+
+.island-map .cloud-2 {
+  animation-name: drift2;
+}
+
+@keyframes drift2 {
+  from {
+    transform: translate(-80px, 430px);
+  }
+  to {
+    transform: translate(900px, 400px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .island-map * {
+    animation: none !important;
+  }
+}
