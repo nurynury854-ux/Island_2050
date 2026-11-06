@@ -97,8 +97,16 @@
   }
 }
 
-.hud-quit {
+.hud-stats {
+  display: flex;
+  gap: 28px;
+  padding: 2px 6px;
+}
+
+.hud-buttons {
   margin-left: auto;
+  display: flex;
+  gap: 8px;
   color: rgb(255 255 255 / 0.8);
 }
 
@@ -752,4 +760,73 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+/* ── Tutorial (spotlight tour) ──────────────────────────────── */
+
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+}
+
+.tour-blocker {
+  position: absolute;
+  inset: 0;
+}
+
+.tour-spotlight {
+  position: fixed;
+  border-radius: var(--radius);
+  box-shadow:
+    0 0 0 4px var(--sun-400),
+    0 0 0 9999px rgb(7 26 39 / 0.62);
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+.tour-card {
+  position: fixed;
+  width: 360px;
+  background: var(--sand-50);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 18px 20px;
+}
+
+.tour-progress {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ocean-500);
+  margin-bottom: 6px;
+}
+
+.tour-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+.tour-card p {
+  font-size: 0.95rem;
+  color: var(--ink-700);
+}
+
+.tour-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tour-actions > .btn-ghost {
+  border-color: transparent;
+  color: var(--ink-500);
+  padding-left: 0;
+}
+
+.tour-nav {
+  display: flex;
+  gap: 6px;
 }

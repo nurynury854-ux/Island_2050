@@ -15,7 +15,7 @@ export default function SidePanel({ game }) {
 
   return (
     <aside className="side-panel">
-      <section className="panel-block">
+      <section className="panel-block" data-tour="sdgs">
         <div className="panel-head">
           <h3>SDG scores</h3>
           <span className="overall" title="Average of all six goals">
@@ -56,7 +56,7 @@ export default function SidePanel({ game }) {
         </div>
       </section>
 
-      <section className="panel-block">
+      <section className="panel-block" data-tour="citizens">
         <h3>Citizens</h3>
         <div className="citizen-moods">
           {CITIZEN_IDS.map((id) => (

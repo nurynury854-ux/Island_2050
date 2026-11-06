@@ -9,6 +9,8 @@
 // ─────────────────────────────────────────────────────────────
 
 import { useState } from 'react';
+import { hasSeenTutorial, markTutorialSeen } from '../game/storage.js';
+import Tutorial from '../components/play/Tutorial.jsx';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useGame } from '../game/GameContext.jsx';
@@ -28,17 +30,19 @@ import './Play.css';
 export default function Play() {
   const { game, closeChapter, enactPolicies, resolveEvent, nextTurn } = useGame();
   const navigate = useNavigate();
+  // The tutorial opens by itself the first time someone plays (and from the HUD's "How to play").
+  const [tutorialOpen, setTutorialOpen] = useState(() => !hasSeenTutorial());
 
   if (!game) return <Navigate to="/play/setup" replace />;
   if (game.phase === 'ended') return <Navigate to="/play/results" replace />;
 
   return (
     <div className="play">
-      <Hud game={game} onQuit={() => navigate('/')} />
+      <Hud game={game} onQuit={() => navigate('/')} onHelp={() => setTutorialOpen(true)} />
 
       <div className="play-body">
         <div className="play-main">
-          <div className="map-card">
+          <div className="map-card" data-tour="map">
             <IslandMap stats={game.stats} features={islandFeatures(game)} fit="slice" />
             <div className="map-year">{termLabel(game.turn)}</div>
           </div>
@@ -55,6 +59,15 @@ export default function Play() {
         {game.phase === 'event' && <EventModal key="event" game={game} onChoose={resolveEvent} />}
         {game.phase === 'report' && <ReportModal key="report" game={game} onContinue={nextTurn} />}
       </AnimatePresence>
+
+      {tutorialOpen && game.phase === 'planning' && (
+        <Tutorial
+          onClose={() => {
+            markTutorialSeen();
+            setTutorialOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -106,8 +119,9 @@ function PolicyTray({ game, onEnact }) {
             ))}
           </div>
           <div className="policy-grid">
-            {shown.map(({ policy, check }) => (
+            {shown.map(({ policy, check }, i) => (
               <PolicyCard
+                tourId={i === 0 ? 'policy-card' : undefined}
                 key={policy.id}
                 policy={policy}
                 selected={selected.includes(policy.id)}
@@ -119,7 +133,7 @@ function PolicyTray({ game, onEnact }) {
         </>
       )}
 
-      <div className="end-bar">
+      <div className="end-bar" data-tour="endbar">
         <div className="end-bar-info">
           {!planning ? (
             <span>The term is ending…</span>

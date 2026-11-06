@@ -6,6 +6,7 @@
 
 const SAVE_KEY = 'island2050.save';
 const RUNS_KEY = 'island2050.runs';
+const TUTORIAL_KEY = 'island2050.tutorialSeen';
 
 function read(key, fallback) {
   try {
@@ -34,3 +35,6 @@ export function addRun(run) {
   write(RUNS_KEY, [run, ...runs].slice(0, 50));
 }
 export const clearRuns = () => write(RUNS_KEY, null);
+
+export const hasSeenTutorial = () => read(TUTORIAL_KEY, false);
+export const markTutorialSeen = () => write(TUTORIAL_KEY, true);

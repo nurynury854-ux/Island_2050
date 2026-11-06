@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { SdgChip, EffectList, formatMoney } from '../Bits.jsx';
 import { YEARS_PER_TURN } from '../../game/constants.js';
 
-export default function PolicyCard({ policy, selected, disabledReason, onToggle }) {
+export default function PolicyCard({ policy, selected, disabledReason, onToggle, tourId }) {
   const locked = Boolean(disabledReason) && !selected;
   const oneTime = { ...policy.instant };
   for (const [k, v] of Object.entries(policy.onComplete)) oneTime[k] = (oneTime[k] ?? 0) + v;
@@ -17,6 +17,7 @@ export default function PolicyCard({ policy, selected, disabledReason, onToggle 
       disabled={locked}
       whileHover={locked ? undefined : { y: -3 }}
       aria-pressed={selected}
+      data-tour={tourId}
     >
       <div className="policy-top">
         <span className="policy-icon" aria-hidden="true">
