@@ -276,3 +276,28 @@ button {
 .muted {
   color: var(--ink-500);
 }
+
+/* ── Filter tabs (Learn page, policy tray) ─────────────────── */
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.filter-row button {
+  background: white;
+  border: 2px solid var(--sand-300);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ink-700);
+}
+
+.filter-row button.active {
+  background: var(--ocean-700);
+  border-color: var(--ocean-700);
+  color: white;
+}

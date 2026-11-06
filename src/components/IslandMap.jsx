@@ -41,6 +41,16 @@ const TURBINES = [
   [120, 190], [165, 220], [100, 255], [150, 280], [118, 330], [170, 345], [195, 175],
 ];
 
+const TURBINES_2 = [[62, 215], [52, 295], [78, 372], [140, 400], [205, 405], [222, 130]];
+
+// Young trees planted by the Reforestation policy
+const NEW_TREES = [
+  [425, 348], [455, 372], [525, 288], [565, 336], [604, 292], [478, 228], [520, 378], [440, 172], [395, 205], [368, 220],
+];
+
+// Rice paddies south-east of the reservoir: [x, y]
+const PADDIES = [0, 1, 2, 3].flatMap((c) => [0, 1].map((r) => [440 + c * 15, 350 + r * 11]));
+
 const WETLANDS = [
   [266, 250, 18, 9], [252, 280, 14, 8], [276, 205, 20, 9], [302, 176, 16, 8], [244, 300, 10, 6],
 ];
@@ -105,6 +115,8 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
   const coalStatus = f('coalPhaseOut');
   const smokeLevel = coalStatus === 'done' ? 0 : clamp01(stats.emissions / 100);
   const flooding = stats.resilience < 25 && f('seaWall') !== 'done';
+  const paddyColor = mix('c9a86a', '8cc63f', clamp01((stats.water - 15) / 55));
+  const greenRoofs = f('greenBuilding') === 'done';
 
   return (
     <svg
@@ -140,6 +152,21 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
           <path key={i} d={`M${x} ${y} q 8 -6 16 0 t 16 0`} style={{ animationDelay: `${i * 0.4}s` }} />
         ))}
       </g>
+
+      {/* Protected fishing zone (east sea) */}
+      <Feature status={f('fishingQuota')} title="Protected fishing zone (quotas)">
+        <ellipse cx="695" cy="270" rx="58" ry="110" fill="rgb(255 255 255 / 0.05)" stroke="rgb(255 255 255 / 0.55)" strokeWidth="2" strokeDasharray="6 6" />
+        {[
+          [695, 160], [752, 270], [695, 380], [638, 270],
+        ].map(([x, y]) => (
+          <g key={x + y}>
+            <circle cx={x} cy={y} r="5" fill="#f08a3c" stroke="white" strokeWidth="1.5" />
+          </g>
+        ))}
+        {[[690, 230], [715, 300], [675, 320]].map(([x, y]) => (
+          <path key={x} d={`M${x} ${y} q 6 -5 12 0 q -6 5 -12 0 l -4 -3 v 6 z`} fill="#bfe3ea" />
+        ))}
+      </Feature>
 
       {/* Shallow water + beach + land */}
       <path d={ISLAND_PATH} fill="none" stroke="#5fb8c0" strokeOpacity="0.55" strokeWidth="46" />
@@ -177,6 +204,20 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
         <title>Reservoir</title>
       </ellipse>
 
+      {/* Rice paddies: green when there is water, brown in a drought */}
+      <g>
+        <title>Rice paddies</title>
+        {PADDIES.map(([x, y]) => (
+          <rect key={`${x}-${y}`} x={x} y={y} width="13" height="9" rx="1.5" fill={paddyColor} style={{ transition: 'fill 1s' }} />
+        ))}
+      </g>
+      <Feature status={f('smartIrrigation')} title="Smart irrigation">
+        <path d="M436 361 H 502 M 454 348 V 372 M 469 348 V 372 M 484 348 V 372" stroke="#4fb3d9" strokeWidth="2" />
+        {[[447, 353], [477, 364], [492, 353]].map(([x, y]) => (
+          <circle key={x} cx={x} cy={y} r="1.8" fill="white" />
+        ))}
+      </Feature>
+
       {/* Mountains */}
       <g>
         {[
@@ -202,12 +243,29 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
         ))}
       </g>
 
+      {/* Young forest from the Reforestation policy */}
+      <Feature status={f('reforestation')} title="Reforestation">
+        {(f('reforestation') === 'done' ? NEW_TREES : NEW_TREES.slice(0, 4)).map(([x, y], i) => (
+          <g key={i}>
+            <rect x={x - 0.75} y={y} width="1.5" height="5" fill="#5b4a2f" />
+            <circle cx={x} cy={y - 1.5} r={f('reforestation') === 'done' ? 5.5 : 3} fill="#5fb15f" />
+          </g>
+        ))}
+      </Feature>
+
       {/* Chip fab (north) */}
       <Feature status={f('fab')} title="Chip fab">
         <rect x="360" y="152" width="70" height="26" rx="3" fill="#f2f5f7" stroke="#b9c3c9" />
         <rect x="360" y="162" width="70" height="5" fill="#5b5fc7" />
         <rect x="372" y="144" width="14" height="8" fill="#d6dde1" />
         <rect x="402" y="144" width="14" height="8" fill="#d6dde1" />
+      </Feature>
+
+      {/* Nuclear plant (north-east coast) */}
+      <Feature status={f('nuclear')} title="Nuclear power plant">
+        <rect x="578" y="178" width="30" height="10" fill="#dfe5e8" stroke="#b9c3c9" />
+        <path d="M 584 178 a 9 9 0 0 1 18 0 Z" fill="#f2f5f7" stroke="#b9c3c9" />
+        <path d="M 612 188 l 3 -20 h 8 l 3 20 Z" fill="#cfd8dc" stroke="#b9c3c9" />
       </Feature>
 
       {/* Coal plant (south-west) */}
@@ -236,7 +294,16 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
           .sort((a, b) => a[1] - b[1])
           .map(([x, by, w, h], i) => (
             <motion.g key={`${x}-${by}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <rect x={x} y={by - h} width={w} height={h} fill="#eef1f3" stroke="#c2ccd2" strokeWidth="1" />
+              <rect
+                x={x}
+                y={by - h}
+                width={w}
+                height={h}
+                fill={greenRoofs ? '#e9f4e7' : '#eef1f3'}
+                stroke={greenRoofs ? '#8cc58f' : '#c2ccd2'}
+                strokeWidth="1"
+              />
+              {greenRoofs && <rect x={x} y={by - h - 1.5} width={w} height="1.5" fill="#5fb15f" />}
               {Array.from({ length: Math.floor(h / 10) }).map((_, r) => (
                 <rect key={r} x={x + 3} y={by - h + 5 + r * 10} width={w - 6} height="3" fill="#9fb3bf" />
               ))}
@@ -253,6 +320,16 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
         <ellipse cx="410" cy="330" rx="8" ry="3" fill="#7fc6de" />
         <rect x="422" y="334" width="16" height="12" fill="#cfe9f2" stroke="#7fb6c9" />
         <ellipse cx="430" cy="334" rx="8" ry="3" fill="#7fc6de" />
+      </Feature>
+
+      {/* Grid battery storage */}
+      <Feature status={f('batteryStorage')} title="Grid battery storage">
+        {[0, 1, 2].map((i) => (
+          <g key={i}>
+            <rect x={350 + i * 11} y="372" width="9" height="12" rx="1" fill="#f2f5f7" stroke="#8cc58f" />
+            <path d={`M${355 + i * 11} 375 l -2 4 h 3 l -2 4`} stroke="#3f9b5a" strokeWidth="1.2" fill="none" />
+          </g>
+        ))}
       </Feature>
 
       {/* MRT line */}
@@ -289,6 +366,12 @@ export default function IslandMap({ stats = START_STATS, features = {}, classNam
       <Feature status={f('offshoreWind')} title="Offshore wind farm">
         {(f('offshoreWind') === 'done' ? TURBINES : TURBINES.slice(0, 3)).map(([x, y]) => (
           <Turbine key={x} x={x} y={y} spinning={f('offshoreWind') === 'done'} />
+        ))}
+      </Feature>
+
+      <Feature status={f('offshoreWind2')} title="Offshore wind farm, phase 2">
+        {(f('offshoreWind2') === 'done' ? TURBINES_2 : TURBINES_2.slice(0, 2)).map(([x, y]) => (
+          <Turbine key={x} x={x} y={y} spinning={f('offshoreWind2') === 'done'} />
         ))}
       </Feature>
 

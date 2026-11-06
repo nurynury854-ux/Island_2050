@@ -14,6 +14,8 @@
 //  drawn, so it can be saved and shown on screen.
 // ─────────────────────────────────────────────────────────────
 
+import { computeSdgScores } from './sdgs.js';
+
 const has = (state, policyId) => Boolean(state.policies[policyId]?.done);
 const round = (n) => Math.round(n);
 
@@ -184,7 +186,7 @@ export const EVENTS = [
   {
     id: 'fishCollapse',
     icon: '🐟',
-    condition: (s) => s.stats.ecosystem < 45,
+    condition: (s) => s.stats.ecosystem < 45 && !has(s, 'fishingQuota'), // quotas prevent collapses
     weight: (s) => 1 + (45 - s.stats.ecosystem) / 10,
     title: () => 'Fish stocks collapse',
     description: () =>
@@ -204,6 +206,165 @@ export const EVENTS = [
       },
     ],
     citizen: () => ({ citizen: 'ahhai', mood: 'angry', text: 'My grandfather fished these waters. I may be the last one.' }),
+  },
+
+  // ── Added in phase 2 ──────────────────────────────────────
+
+  {
+    id: 'earthquake',
+    icon: '🫨',
+    weight: () => 0.9,
+    title: () => 'A strong earthquake hits the east coast',
+    description: (s) =>
+      `Buildings sway, roads crack, and landslides cut off mountain villages. ${
+        has(s, 'nuclear') ? 'The nuclear plant shut down automatically, as designed, and inspectors are on their way. ' : ''
+      }(Taiwan sits on the Pacific “Ring of Fire”. A magnitude 7.4 quake struck Hualien in 2024.)`,
+    base: (s, sev) => {
+      const damage = Math.max(10, round((50 - s.stats.resilience * 0.5) * sev));
+      return { budget: -damage, gdp: -2, approval: -2 };
+    },
+    choices: () => [
+      {
+        label: 'Rebuild stronger',
+        hint: 'Stricter building codes and retrofits. Costly, but safer next time.',
+        effects: { budget: -40, resilience: 6 },
+      },
+      {
+        label: 'Quick repairs only',
+        hint: 'Patch things up and move on.',
+        effects: { budget: -10, approval: -3 },
+      },
+    ],
+    citizen: () => ({ citizen: 'wei', mood: 'neutral', text: 'The factory shook like a boat in a storm. Everyone got out, thank goodness.' }),
+  },
+
+  {
+    id: 'airCrisis',
+    icon: '😷',
+    condition: (s) => s.stats.airQuality < 32,
+    weight: (s) => 1.5 + (32 - s.stats.airQuality) / 8,
+    title: () => 'Purple air alert',
+    description: () =>
+      'The air quality index hits “hazardous”. Schools close, and hospitals fill with children and elderly people who can’t breathe properly.',
+    base: () => ({ approval: -3, gdp: -1 }),
+    choices: () => [
+      {
+        label: 'Order factories to cut output',
+        hint: 'Clears the air quickly, but hurts the economy.',
+        effects: { gdp: -4, airQuality: 8, emissions: -2 },
+        reaction: { citizen: 'wei', mood: 'angry', text: 'Half shifts for two weeks. That’s half my paycheck.' },
+      },
+      {
+        label: 'Hand out masks and wait for the wind',
+        hint: 'Cheap. Doesn’t fix anything.',
+        effects: { budget: -10, approval: -3 },
+      },
+    ],
+    citizen: () => ({ citizen: 'mei', mood: 'angry', text: 'I can taste the air. That can’t be normal.' }),
+  },
+
+  {
+    id: 'climateSummit',
+    icon: '🌐',
+    condition: (s) => s.turn >= 2,
+    weight: () => 1,
+    title: () => 'The world climate summit',
+    description: (s) =>
+      computeSdgScores(s.stats).sdg13 >= 55
+        ? 'World leaders praise the island as a climate leader. Green investors are lining up to fund your next projects.'
+        : 'The island is named as a climate laggard. Trading partners announce carbon border taxes on your exports. (The EU has started a real one, called CBAM.)',
+    base: (s) => (computeSdgScores(s.stats).sdg13 >= 55 ? { budget: 50, gdp: 3 } : { gdp: -5 }),
+    choices: (s) =>
+      computeSdgScores(s.stats).sdg13 >= 55
+        ? [{ label: 'Accept the green investment', hint: 'Your reputation pays off.', effects: { approval: 2 } }]
+        : [
+            {
+              label: 'Help exporters pay the tax',
+              hint: 'Protects jobs for now. Doesn’t cut emissions.',
+              effects: { budget: -40, gdp: 3 },
+            },
+            {
+              label: 'Accept the hit',
+              hint: 'Exporters will be angry.',
+              effects: { approval: -3 },
+            },
+          ],
+    citizen: (s) =>
+      computeSdgScores(s.stats).sdg13 >= 55
+        ? { citizen: 'kai', mood: 'happy', text: 'Customers abroad want “green chips” now, and we can actually deliver.' }
+        : { citizen: 'kai', mood: 'angry', text: 'Two big customers just switched to cleaner suppliers overseas.' },
+  },
+
+  {
+    id: 'factoryOffer',
+    icon: '🏗️',
+    condition: (s) => s.turn <= 9,
+    weight: () => 1,
+    title: () => 'A giant company wants to move in',
+    description: () =>
+      'A global electronics company offers to build a huge factory complex on the west coast. Thousands of jobs, but it will need water, land and power.',
+    base: () => ({}),
+    choices: (s) => {
+      const greenReady = has(s, 'waterRecycling') && s.stats.renewable >= 40;
+      return [
+        {
+          label: 'Welcome them, no conditions',
+          hint: 'Jobs and tax money now. The island pays later.',
+          effects: { gdp: 8, budget: 30, water: -6, emissions: 4, ecosystem: -3 },
+          reaction: { citizen: 'wei', mood: 'happy', text: 'Thousands of jobs! My son might finally move back home.' },
+        },
+        greenReady
+          ? {
+              label: 'Only with clean power and recycled water',
+              hint: 'You have the green infrastructure to make this demand.',
+              effects: { gdp: 5, budget: 15, approval: 2 },
+            }
+          : {
+              label: 'Only with clean power and recycled water',
+              hint: 'Without enough renewables and water recycling, they’ll probably walk away.',
+              effects: { approval: -1 },
+            },
+        {
+          label: 'Turn them down',
+          hint: 'Protect the land. Lose the jobs.',
+          effects: { approval: -3 },
+        },
+      ];
+    },
+    citizen: () => ({ citizen: 'lin', mood: 'neutral', text: 'Factories come and go. The land stays, if we let it.' }),
+  },
+
+  {
+    id: 'seaLevelWarning',
+    icon: '🌊',
+    condition: (s) => s.turn >= 6,
+    weight: (s) => 0.8 + s.turn * 0.1,
+    title: () => 'Seas are rising faster than expected',
+    description: (s) =>
+      has(s, 'seaWall') || has(s, 'wetland')
+        ? 'Scientists confirm that sea levels around the island are rising faster than predicted. Thanks to your coastal defences, most of the coast is safe for now.'
+        : 'Scientists confirm that sea levels around the island are rising faster than predicted. High tides now flood coastal streets every month.',
+    base: (s) =>
+      has(s, 'seaWall') || has(s, 'wetland') ? { approval: 1 } : { resilience: -6, approval: -3, ecosystem: -2 },
+    choices: (s) =>
+      has(s, 'seaWall') || has(s, 'wetland')
+        ? [{ label: 'Keep monitoring', hint: 'Your earlier choices bought you time.', effects: {} }]
+        : [
+            {
+              label: 'Fund a coastal adaptation plan',
+              hint: 'Raise roads, protect key buildings.',
+              effects: { budget: -50, resilience: 10 },
+            },
+            {
+              label: 'Help families move inland',
+              hint: 'Cheaper, but people don’t want to leave their homes.',
+              effects: { budget: -20, approval: -5, resilience: 5 },
+            },
+          ],
+    citizen: (s) =>
+      has(s, 'seaWall') || has(s, 'wetland')
+        ? { citizen: 'ahhai', mood: 'neutral', text: 'The water’s higher at the harbor, but the wetlands take the worst of it.' }
+        : { citizen: 'ahhai', mood: 'angry', text: 'High tide reached my front door last week. My front door!' },
   },
 
   {

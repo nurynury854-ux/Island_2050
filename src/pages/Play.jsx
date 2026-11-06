@@ -61,7 +61,15 @@ export default function Play() {
 
 function PolicyTray({ game, onEnact }) {
   const [selected, setSelected] = useState([]);
+  const [category, setCategory] = useState('All');
   const available = POLICIES.filter((p) => !game.policies[p.id]);
+  const categories = ['All', ...new Set(available.map((p) => p.category))];
+  // Cards you could afford at the start of the term come first; locked ones go to the end.
+  // (Sorted by the start-of-term state so cards don't jump around while you select.)
+  const shown = available
+    .filter((p) => category === 'All' || p.category === category)
+    .map((p) => ({ policy: p, check: canEnact(game, p.id, selected), openAtStart: canEnact(game, p.id, []).ok }))
+    .sort((a, b) => Number(b.openAtStart) - Number(a.openAtStart));
   const totalCost = selected.reduce((sum, id) => sum + POLICY_BY_ID[id].cost, 0);
   const planning = game.phase === 'planning';
 
@@ -86,20 +94,29 @@ function PolicyTray({ game, onEnact }) {
           terms to reach 2050.
         </div>
       ) : (
-        <div className="policy-grid">
-          {available.map((p) => {
-            const check = canEnact(game, p.id, selected);
-            return (
+        <>
+          <div className="filter-row tray-filters" role="tablist" aria-label="Filter policies by category">
+            {categories.map((c) => (
+              <button key={c} role="tab" aria-selected={c === category} className={c === category ? 'active' : ''} onClick={() => setCategory(c)}>
+                {c}
+                <span className="filter-count">
+                  {c === 'All' ? available.length : available.filter((p) => p.category === c).length}
+                </span>
+              </button>
+            ))}
+          </div>
+          <div className="policy-grid">
+            {shown.map(({ policy, check }) => (
               <PolicyCard
-                key={p.id}
-                policy={p}
-                selected={selected.includes(p.id)}
+                key={policy.id}
+                policy={policy}
+                selected={selected.includes(policy.id)}
                 disabledReason={check.ok ? null : check.reason}
-                onToggle={() => toggle(p.id)}
+                onToggle={() => toggle(policy.id)}
               />
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        </>
       )}
 
       <div className="end-bar">

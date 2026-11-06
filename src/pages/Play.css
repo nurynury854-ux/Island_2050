@@ -318,6 +318,16 @@
   margin-bottom: 16px;
 }
 
+.tray-filters {
+  margin: 0 0 16px;
+}
+
+.filter-count {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
 .tray-empty {
   text-align: center;
 }

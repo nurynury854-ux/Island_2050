@@ -62,7 +62,7 @@ export function severity(state) {
 
 /** Money earned per term from taxes, before upkeep. */
 function grossIncome(state) {
-  return Math.round((35 + state.stats.gdp * 0.9) * DIFFICULTIES[state.difficulty].incomeMult);
+  return Math.round((40 + state.stats.gdp * 0.6) * DIFFICULTIES[state.difficulty].incomeMult);
 }
 
 function totalUpkeep(state) {
@@ -314,10 +314,10 @@ export function nextTurn(state) {
 export function determineEnding(state) {
   const sdg = computeSdgScores(state.stats);
   const overall = overallScore(state.stats);
-  if (overall >= 65 && Object.values(sdg).every((v) => v >= 40)) return 'greenHaven';
+  if (overall >= 70 && Object.values(sdg).every((v) => v >= 45)) return 'greenHaven';
   if (state.stats.gdp >= 65 && sdg.sdg13 < 40) return 'richButBurning';
   if (state.stats.resilience < 30 && sdg.sdg13 < 45) return 'sinkingIsland';
-  if (overall >= 50) return 'balancedFuture';
+  if (overall >= 52) return 'balancedFuture';
   return 'strugglingIsland';
 }
 
