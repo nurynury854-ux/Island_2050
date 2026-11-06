@@ -18,6 +18,16 @@ final version**. Replace ⚠️ with ✅ and add the link once verified.
 | Water recycling | Taiwan has reclaimed-water plants supplying industry (e.g. Fengshan, Kaohsiung) | Water Resources Agency | ⚠️ |
 | MRT | Taipei Metro opened in 1996 and is one of Asia's most-used, most reliable metro systems | Taipei Rapid Transit Corporation | ⚠️ |
 | Solar | Taiwan has promoted rooftop solar through feed-in tariffs | Energy Administration, MOEA | ⚠️ |
+| Battery storage | Taiwan has been adding grid-scale battery storage as solar grows | Taipower; Energy Administration, MOEA | ⚠️ |
+| Offshore wind rounds | Taiwan plans offshore wind in several rounds, later ones farther offshore | Energy Administration, MOEA | ⚠️ |
+| Scooters | Taiwan has one of the highest scooter ownership rates in the world; e-scooters with battery-swap stations are common | Ministry of Transportation and Communications | ⚠️ |
+| Nuclear | Taiwan's last reactor shut down in 2025; restarting has been put to referendums and voters are divided | Central Election Commission (中選會); Taipower | ⚠️ |
+| Forests | Forests cover roughly 60% of Taiwan | Forestry and Nature Conservation Agency (林業及自然保育署) | ⚠️ |
+| Green buildings | Taiwan's green building label is called EEWH | Architecture and Building Research Institute (建研所) | ⚠️ |
+| Fishing | Taiwan has one of the largest distant-water fishing fleets; FAO estimates over a third of global fish stocks are overfished | Fisheries Agency (漁業署); FAO "State of World Fisheries and Aquaculture" | ⚠️ |
+| Farm water | Agriculture uses most of Taiwan's water | Water Resources Agency (水利署) | ⚠️ |
+| Earthquake | A magnitude 7.4 earthquake struck Hualien in April 2024 | Central Weather Administration | ⚠️ |
+| Carbon border tax | The EU has introduced a carbon border tax called CBAM | European Commission | ⚠️ |
 | Sea walls | Hard sea walls protect coasts but can damage beaches and habitats; "nature-based" defenses like wetlands are an alternative | IPCC AR6 WGII | ⚠️ |
 
 General SDG definitions: United Nations, https://sdgs.un.org/goals

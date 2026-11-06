@@ -14,6 +14,7 @@ You need [Node.js](https://nodejs.org) installed.
 npm install      # first time only: downloads the libraries
 npm run dev      # starts the site at http://localhost:5173
 npm run build    # makes the final website in /dist (for uploading/hosting)
+npm run balance  # plays hundreds of games automatically and prints how they end
 ```
 
 ## How the code is organized

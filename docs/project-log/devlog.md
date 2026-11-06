@@ -4,6 +4,34 @@ Newest entry at the top.
 
 ---
 
+## 2026-11-06 · Session 2: Phase 2, depth and polish
+
+**Plan:** wrote the phase 2 plan (content, balance, tutorial, deploy, then demo deliverables). Decided: laptop/desktop only,
+include nuclear with neutral framing, deploy with GitHub + Vercel, and judge the real feel on the finished product.
+
+**Done**
+- **Git:** project is now under version control (branch `phase-2`), one commit per step.
+- **Content:** 9 → **17 policies** (battery storage, offshore wind phase 2, EV & e-scooter subsidy, nuclear referendum,
+  reforestation, green building code, fishing quotas, smart irrigation) and 8 → **13 events** (earthquake, air pollution
+  crisis, world climate summit, giant factory offer, sea level warning). Fishing quotas now prevent fish stock collapses.
+- **Map:** drawings for every new policy (second wind farm, nuclear dome, batteries, young forest, green roofs, protected
+  fishing zone with buoys, irrigation channels), plus **rice paddies** that turn brown in a drought.
+- **Policy tray:** category filter tabs with counts; cards you can't afford are sorted to the end.
+- **Balance:** `npm run balance` is now part of the project. The new content made the game too easy, so it was retuned (`challenges.md` C5).
+- **Tutorial:** a 6-step spotlight tour on the first game, reopened from "How to play".
+- **HUD:** shows the next election year.
+- **Deploy prep:** `vercel.json` added.
+
+**Tested:** full playthroughs in headless Chrome at 1280×720 and 1920×1080, with no errors, all 17 cards showing, and new events appearing.
+
+**Next**
+- Push to GitHub and connect Vercel (needs my GitHub repo URL).
+- Wireframes for all pages → `docs/wireframes/`
+- Slides for Nov 27.
+- Me: verify ⚠️ facts in `sources.md`, write the About page.
+
+---
+
 ## 2026-11-05 · Session 1: Idea, plan, and base website
 
 **Planning**

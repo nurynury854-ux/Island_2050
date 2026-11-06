@@ -49,3 +49,20 @@ Newest at the bottom. Format: **what** was decided, **alternatives** considered,
 ### D11: Island map drawn in SVG code, not images (2026-11-05)
 - **Decided:** The island is drawn with SVG shapes in `IslandMap.jsx` instead of image files.
 - **Why:** It can change smoothly with every stat (smog, reservoir size, number of buildings), so players *see* the consequences of their choices. It also shows more programming than pasting in pictures.
+
+### D12: Include nuclear power, with neutral framing (2026-11-06)
+- **Decided:** Add a "Nuclear Restart Referendum" policy. Its Learn entry presents the pros (steady, low-carbon power) and cons (earthquake risk, waste, cost) equally, and citizens disagree with each other (Kai for, Grandma Lin against).
+- **Alternatives:** Leave it out, or replace it with geothermal.
+- **Why:** It's one of the most real and debated energy tradeoffs in Taiwan. The game doesn't pick a side. Nuclear helps climate (SDG 13) but doesn't count as *renewable* (SDG 7), which is a real nuance.
+
+### D13: Laptops and desktops only (2026-11-06)
+- **Decided:** Optimize for laptop and desktop screens (1280×720 up to 1920×1080). No mobile menu or phone-specific work.
+- **Why:** The game is a dashboard with many panels, the presentation is on a computer, and the time is better spent on content.
+
+### D14: First-game tutorial (2026-11-06)
+- **Decided:** A 6-step "spotlight" tour of the game screen that appears the first time someone plays and can be reopened with "How to play".
+- **Why:** New players (and the class watching the demo) shouldn't have to work out what budget, approval and SDG scores mean by themselves.
+
+### D15: Real playtesting only on the finished product (2026-11-06)
+- **Decided:** Keep balancing with the automated script while building. The creator judges length and difficulty by playing the finished version, and then we adjust.
+

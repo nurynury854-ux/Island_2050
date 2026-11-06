@@ -92,18 +92,17 @@ Ecosystem health, Disaster resilience, plus **Budget** in $M.
 Each policy is a card with: up-front cost, upkeep per term (or income, e.g. a carbon tax), build time,
 instant effects, effects when finished, ongoing effects per term, and requirements.
 
-Demo set (9): Offshore Wind Farm · Rooftop Solar Subsidy · Phase Out Coal · Carbon Tax ·
-MRT Expansion · Chip Fab Expansion · Wetland & Mangrove Restoration · Water Recycling Plants · Sea Wall
+Current set (17): Offshore Wind Farm · Offshore Wind Phase 2 · Rooftop Solar Subsidy · Grid Battery Storage ·
+Phase Out Coal · Nuclear Restart Referendum · Carbon Tax · Chip Fab Expansion · MRT Expansion ·
+Electric Scooter & EV Subsidy · Green Building Code · Sea Wall · Wetland & Mangrove Restoration · Reforestation ·
+Fishing Quotas · Water Recycling Plants · Smart Irrigation
 
-Final set (~15) adds candidates such as: EV subsidy, green building code, nuclear restart referendum,
-fishing quotas, smart agriculture, affordable housing, reforestation, battery storage.
+A player can afford only ~11–14 of them per game, so every playthrough is different.
 
 ### Events
-Demo set (8): Typhoon · Drought (fabs vs farms, based on Taiwan's 2021 drought) · Heatwave ·
-Energy price spike · Youth climate march · Tech boom · Fish stock collapse · Quiet year
-
-Final set (~12) adds candidates such as: earthquake, international climate summit, sea level warning,
-factory relocation offer, air pollution crisis.
+Current set (13): Typhoon · Drought (fabs vs farms, based on Taiwan's 2021 drought) · Heatwave ·
+Energy price spike · Youth climate march · Tech boom · Fish stock collapse · Earthquake · Air pollution crisis ·
+World climate summit · Giant factory offer · Sea level warning · Quiet year
 
 ### Citizens (with the creator's face)
 | Id | Persona | Cares about |
@@ -166,15 +165,18 @@ Wireframes for the other pages are drawn for the slides (see `project-log/`).
 
 ## 7. Timeline
 
-| Week | Dates | Goal |
+| When | Goal | Status |
 |---|---|---|
-| 1 | Nov 5–11 | Setup, design system, routing, all pages as shells, Home finished, island SVG v1 |
-| 2 | Nov 12–18 | Game engine, dashboard UI, 9 policies, 8 events, meters, citizen pop-ups (placeholders) |
-| 3 | Nov 19–25 | Results page + charts, Setup page, story chapters, partial Learn page, **take citizen photos** |
-| — | Nov 26–27 | Slides, rehearse, **submit by Nov 27 23:59** |
-| 4 | Nov 28–Dec 4 | All ~15 policies & ~12 events, all endings, balancing |
-| 5 | Dec 5–11 | Supabase leaderboard + global stats, SDG page polish, full Learn page, sound, (maybe Chinese) |
-| 6 | Dec 12–18 | Playtesting, bug fixes, mobile layout, deploy, **due Dec 18** |
+| Nov 5 | Plan, base website (engine, 9 policies, 8 events, all 8 pages) | ✅ |
+| Nov 6 | Phase 2: 17 policies, 13 events, tutorial, tray filters, balance script, git | ✅ |
+| Nov 7–19 | Deploy (GitHub + Vercel), wireframes for all pages, fact verification, About page | ⏳ |
+| Nov 20–26 | Slides, rehearse the live demo | |
+| **Nov 27** | **Submit slides by 23:59 + present** | |
+| Nov 28–Dec 4 | Supabase global leaderboard + "% of players chose X" stats | |
+| Dec 5–11 | Citizen photos, sound, Chinese (decide), polish | |
+| Dec 12–18 | Creator playtests the finished game → tune length/difficulty, bug fixes, **due Dec 18** | |
+
+The app targets **laptops and desktops** (1280×720 and up); see decision D13.
 
 ### Definition of "50%" for the Nov 27 demo
 - The game is playable from start to finish (smaller content set).
