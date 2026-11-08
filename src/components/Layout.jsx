@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useGame } from '../game/GameContext.jsx';
+import { getReturnSlide } from '../game/storage.js';
 import './Layout.css';
 
 const NAV_LINKS = [
@@ -16,6 +17,8 @@ export default function Layout({ bare = false }) {
   const { pathname, hash } = useLocation();
   const { game } = useGame();
   const hasGameInProgress = game && game.phase !== 'ended';
+  // Set when the presenter jumps from the slides into the live demo.
+  const returnSlide = getReturnSlide();
 
   // When the page changes: jump to #section if the link has one, otherwise go to the top.
   useEffect(() => {
@@ -34,6 +37,12 @@ export default function Layout({ bare = false }) {
               Island <b>2050</b>
             </span>
           </Link>
+          {/* Shown after the presenter jumps from the slides into the live demo */}
+          {returnSlide && (
+            <Link to={`/present/${returnSlide}`} className="back-to-slides">
+              ← Back to slides
+            </Link>
+          )}
           <nav className="nav-links" aria-label="Main">
             {NAV_LINKS.map((l) => (
               <NavLink key={l.to} to={l.to}>
@@ -70,6 +79,7 @@ export default function Layout({ bare = false }) {
                   {l.label}
                 </Link>
               ))}
+              <Link to="/present">Presentation</Link>
               <a href="https://sdgs.un.org/goals" target="_blank" rel="noreferrer">
                 UN SDGs ↗
               </a>

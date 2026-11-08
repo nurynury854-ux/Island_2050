@@ -72,6 +72,7 @@ code is heavily commented so it can be understood and explained.
 /sdgs           The 6 SDGs in the game and how each is measured
 /hall           Hall of Islands: past runs (local now, global leaderboard later)
 /about          About the creator, motivation, sources, credits
+/present        The Nov 27 presentation slides (not in the top nav; linked in the footer)
 ```
 
 ---
@@ -169,8 +170,8 @@ Wireframes for all 8 pages (plus a site map and the turn loop) are in [`wirefram
 |---|---|---|
 | Nov 5 | Plan, base website (engine, 9 policies, 8 events, all 8 pages) | ✅ |
 | Nov 6 | Phase 2: 17 policies, 13 events, tutorial, tray filters, balance script, git | ✅ |
-| Nov 7–19 | Deploy (GitHub ✅ + Vercel), wireframes for all pages ✅, fact verification, About page | ⏳ |
-| Nov 20–26 | Slides, rehearse the live demo | |
+| Nov 7–19 | Deploy (GitHub ✅ + Vercel ✅), wireframes for all pages ✅, fact verification, About page | ⏳ |
+| Nov 20–26 | Slides (`/present` ✅, built Nov 8), rehearse the live demo | ⏳ |
 | **Nov 27** | **Submit slides by 23:59 + present** | |
 | Nov 28–Dec 4 | Supabase global leaderboard + "% of players chose X" stats | |
 | Dec 5–11 | Citizen photos, sound, Chinese (decide), polish | |
@@ -182,7 +183,7 @@ The app targets **laptops and desktops** (1280×720 and up); see decision D13.
 - The game is playable from start to finish (smaller content set).
 - Finished: Home, Setup, Game, Results, Learn (partial), SDGs.
 - Placeholder designs: Hall (local runs only, no global board yet), About.
-- Slides show wireframes and the plan for everything not yet built.
+- Slides (the `/present` page) show wireframes and the plan for everything not yet built.
 
 ---
 

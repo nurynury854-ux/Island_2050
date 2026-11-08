@@ -133,3 +133,20 @@
 .footer-links a:hover {
   color: white;
 }
+
+/* "Back to slides" button in the nav, shown after the presenter jumps into the live demo */
+.back-to-slides {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 2px solid var(--sun-400);
+  color: var(--ocean-950);
+  background: #fff6df;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.back-to-slides:hover {
+  background: var(--sun-400);
+}

@@ -5,36 +5,9 @@ import IslandMap from '../components/IslandMap.jsx';
 import CitizenAvatar from '../components/CitizenAvatar.jsx';
 import { SDGS } from '../game/sdgs.js';
 import { CITIZENS, CITIZEN_IDS } from '../game/citizens.js';
-import { START_STATS } from '../game/constants.js';
-import { POLICIES } from '../game/policies.js';
+import { SCENES } from '../game/scenes.js';
 import { useGame } from '../game/GameContext.jsx';
 import './Home.css';
-
-// Three versions of the island for the hero animation.
-const allBuilt = Object.fromEntries(POLICIES.map((p) => [p.id, 'done']));
-const SCENES = [
-  {
-    id: 'today',
-    label: '2026 · Today',
-    caption: 'Coal smoke, a shrinking reservoir, and typhoons that get stronger every year.',
-    stats: START_STATS,
-    features: {},
-  },
-  {
-    id: 'act',
-    label: '2050 · If we act',
-    caption: 'Wind in the strait, clean air over the city, and wetlands that hold back the sea.',
-    stats: { gdp: 74, approval: 66, emissions: 20, renewable: 72, water: 62, airQuality: 85, ecosystem: 78, resilience: 72 },
-    features: allBuilt,
-  },
-  {
-    id: 'neglect',
-    label: '2050 · If we don’t',
-    caption: 'Thick smog, a dry reservoir, dying forests and flooded coasts.',
-    stats: { gdp: 66, approval: 30, emissions: 96, renewable: 10, water: 12, airQuality: 8, ecosystem: 16, resilience: 12 },
-    features: {},
-  },
-];
 
 const STEPS = [
   {

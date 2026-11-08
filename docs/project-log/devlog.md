@@ -4,6 +4,27 @@ Newest entry at the top.
 
 ---
 
+## 2026-11-08 · Session 4: Presentation page
+
+**Done**
+- **Vercel** is connected, so the site is live.
+- **`/present`: 12 slides inside the website** (decision D16), about 5½ min of slides + 3 min of live demo.
+  Keys: → / ← / PageDown / PageUp (clickers work), **N** speaker notes, **O** list of slides, **F** full screen.
+  The slide number is in the URL, so refreshing or pressing Back keeps your place. Slides scale to fit any screen.
+- **Demo island** (`src/game/demo.js`): the "Live demo" slide loads a game already in 2034 ($150M, 63% approval,
+  wind/solar/wetlands/carbon tax running) or a finished 2050 (Green Haven). It's the same every time (seeded random).
+  A "← Back to slides" button appears in the top bar during the demo.
+- Footer link to the presentation. The island scenes moved to `src/game/scenes.js` (shared by Home and the slides).
+
+**Tested:** screenshots of all 12 slides, plus an automated run in headless Chrome: keyboard controls, notes, slide list,
+demo island → play a term → Turning Point → back to slides → finished 2050 report card → browser Back (23/23 checks pass).
+
+**Next**
+- Me: rehearse once with the notes (N) and time it. Cut or shorten slides that run long.
+- Me: verify ⚠️ facts in `sources.md`, write the About page.
+
+---
+
 ## 2026-11-08 · Session 3: Wireframes
 
 **Done**

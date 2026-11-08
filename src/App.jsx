@@ -7,6 +7,8 @@ import Setup from './pages/Setup.jsx';
 import Play from './pages/Play.jsx';
 // Results uses the big chart library, so it is only downloaded when someone opens that page.
 const Results = lazy(() => import('./pages/Results.jsx'));
+// The presentation is only downloaded when someone opens /present.
+const Present = lazy(() => import('./pages/Present.jsx'));
 import Learn from './pages/Learn.jsx';
 import Sdgs from './pages/Sdgs.jsx';
 import Hall from './pages/Hall.jsx';
@@ -37,6 +39,15 @@ export default function App() {
       <Route element={<Layout bare />}>
         <Route path="/play" element={<Play />} />
       </Route>
+      {/* The presentation slides fill the whole screen: no navigation bar or footer. */}
+      <Route
+        path="/present/:slide?"
+        element={
+          <Suspense fallback={<div className="present-loading">Loading the presentation…</div>}>
+            <Present />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 }

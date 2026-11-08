@@ -38,3 +38,29 @@ export const clearRuns = () => write(RUNS_KEY, null);
 
 export const hasSeenTutorial = () => read(TUTORIAL_KEY, false);
 export const markTutorialSeen = () => write(TUTORIAL_KEY, true);
+
+// ── Presentation ─────────────────────────────────────────────
+// When the presenter jumps from a slide into the live demo, remember the slide so
+// every page can show a "Back to slides" button. sessionStorage forgets it when the tab closes.
+const RETURN_SLIDE_KEY = 'island2050.returnSlide';
+export function setReturnSlide(n) {
+  try {
+    sessionStorage.setItem(RETURN_SLIDE_KEY, String(n));
+  } catch {
+    /* storage unavailable: ignore */
+  }
+}
+export function getReturnSlide() {
+  try {
+    return Number(sessionStorage.getItem(RETURN_SLIDE_KEY)) || null;
+  } catch {
+    return null;
+  }
+}
+export function clearReturnSlide() {
+  try {
+    sessionStorage.removeItem(RETURN_SLIDE_KEY);
+  } catch {
+    /* storage unavailable: ignore */
+  }
+}

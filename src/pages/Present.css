@@ -1,0 +1,975 @@
+/* ─────────────────────────────────────────────────────────────
+   PRESENTATION: the deck frame (stage, bottom bar, notes) and
+   the styles of the slides themselves (classes starting "s-").
+   Slides are designed at 1280×720 and scaled to fit, so sizes
+   here are in real pixels of that canvas.
+   ───────────────────────────────────────────────────────────── */
+
+.present {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ocean-950);
+  color: var(--ink-900);
+  overflow: hidden;
+}
+
+.present-viewport {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.present-frame {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 60px rgb(0 0 0 / 0.45);
+}
+
+.present-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.present-slide {
+  position: absolute;
+  inset: 0;
+}
+
+/* ── Bottom bar ─────────────────────────────────────────────── */
+
+.present-bar {
+  flex: none;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  color: rgb(255 255 255 / 0.6);
+  font-size: 0.85rem;
+}
+
+.present-arrow {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.present-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.present-count {
+  min-width: 52px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.present-progress {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.12);
+  overflow: hidden;
+}
+
+.present-progress div {
+  height: 100%;
+  background: var(--sun-400);
+  transition: width 0.3s ease;
+}
+
+.present-key {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.present-key:hover,
+.present-key[aria-pressed='true'] {
+  color: white;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.present-key kbd {
+  display: inline-block;
+  min-width: 18px;
+  padding: 0 4px;
+  margin-right: 4px;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* ── Speaker notes ──────────────────────────────────────────── */
+
+.present-notes {
+  flex: none;
+  max-height: 32vh;
+  overflow-y: auto;
+  padding: 14px 24px 10px;
+  background: var(--ocean-900);
+  color: rgb(255 255 255 / 0.9);
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.present-notes-head {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sun-400);
+  margin-bottom: 6px;
+}
+
+.present-notes-head span {
+  color: rgb(255 255 255 / 0.5);
+  font-weight: 500;
+}
+
+.present-notes ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.present-notes li + li {
+  margin-top: 4px;
+}
+
+/* ── Slide list (O) ─────────────────────────────────────────── */
+
+.present-list {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  background: rgb(7 26 39 / 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.present-list-inner {
+  width: min(560px, 90vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--sand-50);
+  box-shadow: var(--shadow-lg);
+}
+
+.present-list-inner h2 {
+  font-size: 1.4rem;
+}
+
+.present-list ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.present-list button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.present-list button:hover {
+  background: var(--sand-200);
+}
+
+.present-list button.current {
+  background: var(--ocean-700);
+  color: white;
+}
+
+.present-list-num {
+  width: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}
+
+.present-list-time {
+  margin-left: auto;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ═════════════════════════════════════════════════════════════
+   THE SLIDES
+   ═════════════════════════════════════════════════════════════ */
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 52px 64px;
+  background: var(--sand-100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.slide-ocean {
+  background:
+    radial-gradient(circle at 80% 20%, rgb(29 122 140 / 0.35), transparent 55%),
+    linear-gradient(160deg, var(--ocean-800), var(--ocean-950));
+  color: white;
+}
+
+.slide-ocean .kicker {
+  color: var(--sea-300);
+}
+
+.slide .kicker {
+  font-size: 15px;
+}
+
+.s-header {
+  margin-bottom: 28px;
+}
+
+.s-header h2 {
+  font-size: 46px;
+  margin: 0;
+  line-height: 1.12;
+}
+
+.slide h2 em,
+.slide h1 em {
+  font-style: italic;
+  color: var(--leaf-700);
+}
+
+.slide-ocean h1 em,
+.slide-ocean h2 em {
+  color: var(--sun-400);
+}
+
+.slide h3 {
+  font-size: 23px;
+  margin: 0 0 6px;
+}
+
+.slide p {
+  margin: 0;
+}
+
+.s-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+}
+
+.s-foot {
+  margin-top: 40px !important;
+  font-size: 21px;
+  color: var(--ink-700);
+  max-width: 1000px;
+}
+
+.s-muted {
+  color: var(--ink-500);
+}
+
+.s-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.s-pill-built {
+  background: #dcf1e2;
+  color: var(--leaf-700);
+}
+
+.s-pill-partial {
+  background: #fdf0d2;
+  color: #8a5d00;
+}
+
+/* ── 1. Title ── */
+
+.s-title {
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+}
+
+.s-title-text {
+  flex: 1;
+}
+
+.s-title h1 {
+  font-size: 104px;
+  line-height: 1;
+  margin: 8px 0 22px;
+}
+
+.s-title-sub {
+  font-size: 28px;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.s-title-meta {
+  margin-top: 10px !important;
+  font-size: 20px;
+  color: var(--sea-300);
+}
+
+.s-title-by {
+  margin-top: 44px !important;
+  font-size: 18px;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.s-title-map,
+.s-thanks-map {
+  position: relative;
+  width: 600px;
+  aspect-ratio: 8 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.s-title-map svg,
+.s-thanks-map svg,
+.s-demo-map svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.s-map-label {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgb(7 26 39 / 0.75);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ── 2. Idea ── */
+
+.s-tradeoffs,
+.s-challenges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.s-tradeoff,
+.s-challenge {
+  padding: 30px;
+}
+
+.s-tradeoff h3,
+.s-challenge h3 {
+  font-size: 26px;
+}
+
+.s-tradeoff-icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.s-good,
+.s-bad {
+  font-size: 21px;
+  font-weight: 500;
+  margin-top: 6px !important;
+}
+
+.s-good {
+  color: var(--good);
+}
+
+.s-bad {
+  color: var(--bad);
+}
+
+/* ── 3. SDGs ── */
+
+.s-sdgs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.s-sdg {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 22px 20px;
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-sm);
+  border-top: 6px solid var(--sdg);
+}
+
+.s-sdg-num {
+  flex: none;
+  min-width: 58px;
+  height: 58px;
+  padding: 0 6px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--sdg);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.s-sdg h3 {
+  font-size: 21px;
+  margin-bottom: 4px;
+}
+
+.s-sdg p {
+  font-size: 17px;
+  color: var(--ink-700);
+  line-height: 1.4;
+}
+
+/* ── 4. Loop ── */
+
+.s-loop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.s-loop-step {
+  position: relative;
+  display: flex;
+}
+
+.s-loop-step .s-card {
+  flex: 1;
+  padding: 22px;
+}
+
+.s-loop-step p {
+  font-size: 17px;
+  color: var(--ink-700);
+}
+
+.s-loop-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.s-loop-arrow {
+  position: absolute;
+  right: -24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ocean-500);
+}
+
+.s-facts {
+  margin-top: 40px;
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.s-fact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 22px;
+  border-radius: var(--radius);
+  background: var(--ocean-800);
+  color: white;
+}
+
+.s-fact b {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--sun-400);
+}
+
+.s-fact span {
+  font-size: 16px;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.s-fact-people {
+  flex: 1;
+  gap: 8px;
+}
+
+.s-avatars {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── 5. Demo ── */
+
+.s-demo {
+  justify-content: center;
+}
+
+.s-demo-text,
+.s-demo-options,
+.s-demo-small {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+}
+
+.s-demo-text h2 {
+  font-size: 80px;
+  margin: 4px 0 12px;
+}
+
+.s-demo-text p {
+  font-size: 22px;
+  color: rgb(255 255 255 / 0.85);
+}
+
+.s-demo-options {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.s-demo-btn {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border: 2px solid rgb(255 255 255 / 0.15);
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 0.08);
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.s-demo-btn:hover {
+  background: rgb(255 255 255 / 0.14);
+  border-color: var(--sun-400);
+}
+
+.s-demo-btn b {
+  display: block;
+  font-size: 24px;
+}
+
+.s-demo-btn span span {
+  display: block;
+  font-size: 16px;
+  color: rgb(255 255 255 / 0.75);
+}
+
+.s-demo-icon {
+  font-size: 40px;
+}
+
+.s-demo-go {
+  margin-left: auto;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--sun-400);
+  color: var(--ocean-950);
+  font-weight: 800;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.s-demo-small {
+  margin-top: 18px !important;
+  font-size: 14px;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.s-demo-map {
+  position: absolute;
+  right: -150px;
+  top: 50%;
+  width: 640px;
+  aspect-ratio: 8 / 5;
+  transform: translateY(-50%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  opacity: 0.9;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── 6. Site map image ── */
+
+.s-image-slide {
+  padding: 0;
+  background: white;
+}
+
+.s-image-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── 7. Wireframes ── */
+
+.s-wireframes {
+  flex-direction: row;
+  gap: 32px;
+  padding: 44px 48px;
+}
+
+.s-wf-side {
+  width: 300px;
+  flex: none;
+}
+
+.s-wf-side .s-header h2 {
+  font-size: 40px;
+}
+
+.s-wf-side p {
+  font-size: 18px;
+  color: var(--ink-700);
+}
+
+.s-wf-legend {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--ink-700);
+}
+
+.s-wf-dashed {
+  display: inline-block;
+  width: 40px;
+  height: 16px;
+  vertical-align: -2px;
+  margin-right: 6px;
+  border: 2px dashed var(--coral-500);
+  border-radius: 4px;
+  background: #fdf3ef;
+}
+
+.s-wf-hint {
+  font-weight: 700;
+  color: var(--ocean-500) !important;
+}
+
+.s-wf-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  align-content: center;
+}
+
+.s-wf-thumb {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.s-wf-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--sand-300);
+  transition: transform 0.15s ease;
+}
+
+.s-wf-thumb:hover img {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.s-wf-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.s-lightbox {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  padding: 24px;
+  border: none;
+  background: rgb(7 26 39 / 0.85);
+  cursor: zoom-out;
+}
+
+.s-lightbox img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── 8. Under the hood ── */
+
+.s-arch {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.s-arch-box {
+  flex: 1;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.s-arch-engine {
+  background: var(--ocean-800);
+  color: white;
+}
+
+.s-arch-box code {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--ocean-500);
+}
+
+.s-arch-engine code {
+  color: var(--sun-400);
+}
+
+.s-arch-box p {
+  font-size: 17px;
+}
+
+.s-arch-arrow {
+  align-self: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ocean-500);
+}
+
+.s-code-row {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+.s-code {
+  margin: 0;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  background: var(--ocean-950);
+  color: #e8f1f2;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.s-code-comment {
+  color: var(--sea-300);
+  opacity: 0.8;
+}
+
+.s-also {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  font-size: 19px;
+}
+
+/* ── 9. Balance ── */
+
+.s-balance {
+  display: grid;
+  grid-template-columns: 748px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.s-chart {
+  padding: 20px 24px 14px;
+}
+
+.s-chart-note {
+  margin-top: 6px !important;
+  font-size: 13px;
+  color: var(--ink-500);
+}
+
+.s-insights {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: 19px;
+}
+
+/* ── 10. Challenges ── */
+
+.s-problem {
+  font-size: 18px;
+  color: var(--ink-700);
+}
+
+.s-fix {
+  margin-top: 14px !important;
+  padding-top: 14px;
+  border-top: 1px solid var(--sand-200);
+  font-size: 18px;
+}
+
+.s-fix b {
+  color: var(--leaf-700);
+}
+
+/* ── 11. Progress ── */
+
+.s-progress {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 24px;
+}
+
+.s-pages {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 20px;
+}
+
+.s-pages .s-pill {
+  width: 70px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.s-next {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.s-next li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px;
+  font-size: 20px;
+}
+
+.s-next-when {
+  font-weight: 700;
+  color: var(--ocean-500);
+}
+
+/* ── 12. Thanks ── */
+
+.s-thanks {
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
+}
+
+.s-thanks > div:first-child {
+  flex: 1;
+}
+
+.s-thanks h2 {
+  font-size: 88px;
+  margin: 0;
+}
+
+.s-thanks-q {
+  font-size: 34px;
+  color: var(--sea-300);
+  margin-top: 6px !important;
+}
+
+.s-thanks-url {
+  margin-top: 48px !important;
+  font-size: 22px;
+  color: rgb(255 255 255 / 0.75);
+}
+
+.s-thanks-url b {
+  font-size: 34px;
+  color: var(--sun-400);
+}
+
+.s-thanks-map {
+  width: 520px;
+}

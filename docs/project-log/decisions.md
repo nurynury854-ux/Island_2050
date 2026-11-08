@@ -66,3 +66,8 @@ Newest at the bottom. Format: **what** was decided, **alternatives** considered,
 ### D15: Real playtesting only on the finished product (2026-11-06)
 - **Decided:** Keep balancing with the automated script while building. The creator judges length and difficulty by playing the finished version, and then we adjust.
 
+### D16: The presentation lives inside the website (2026-11-08)
+- **Decided:** The Nov 27 slides are a page of the site (`/present`), not Canva or PowerPoint. The submission is a link to it.
+- **Alternatives:** Canva / Google Slides; a slides library like reveal.js.
+- **Why:** Slides can use the real components (the animated island, SDG data, live counts of policies and events), the live demo is one click away, and everything shares one design. A small custom deck (`src/pages/Present.jsx`) was preferred over a library: the slides are data (`src/presentation/slides.jsx`), like the rest of the content, and there's nothing extra to explain.
+- **Demo:** a button loads a prepared "demo island" in 2034 (`src/game/demo.js`) so the live demo starts mid-game instead of on an empty 2026 map. It is built the same way every time.

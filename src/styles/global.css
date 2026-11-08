@@ -301,3 +301,13 @@ button {
   border-color: var(--ocean-700);
   color: white;
 }
+
+/* Shown for a moment while the presentation is downloading */
+.present-loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--ocean-950);
+  color: rgb(255 255 255 / 0.7);
+}

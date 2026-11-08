@@ -37,6 +37,8 @@ export function GameProvider({ children }) {
       resolveEvent: (choiceIndex) => setGame((g) => engine.resolveEvent(g, choiceIndex)),
       nextTurn: () => setGame((g) => engine.nextTurn(g)),
       quit: () => setGame(null),
+      // Replaces the current game with a ready-made one (used by the presentation's demo island).
+      loadState: (state) => setGame(state),
     }),
     [],
   );

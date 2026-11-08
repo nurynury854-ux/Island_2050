@@ -30,10 +30,15 @@ src/
     sdgs.js            how each SDG score is calculated
     engine.js          the rules: what happens each turn
     storage.js         saving to the browser
+    demo.js            the ready-made demo island for the presentation
+    scenes.js          the three island scenes (today / if we act / if we don't)
     GameContext.jsx    connects the engine to React
 
   pages/               ← one file per page (URL)
-    Home, Setup, Play, Results, Learn, Sdgs, Hall, About
+    Home, Setup, Play, Results, Learn, Sdgs, Hall, About, Present (the slides)
+
+  presentation/
+    slides.jsx         the presentation slides and speaker notes  ← edit the talk here
 
   components/          ← reusable pieces
     IslandMap.jsx      the SVG island that changes with your choices
