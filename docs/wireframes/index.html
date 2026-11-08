@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Island 2050 Wireframes</title>
+<!--
+  Low-fidelity wireframes for all 8 pages of Island 2050 (for the Nov 27 slides).
+  Open this file in a browser to see every page, or add ?only=<id> to show one canvas
+  (that's what render.sh uses to make the PNGs). Ids: sitemap, home, setup, game,
+  turn, results, learn, sdgs, hall, about.
+  Solid gray = built. Dashed coral = planned (not built yet).
+-->
+<style>
+  :root {
+    --line: #4d4d4d;
+    --soft: #8a8a85;
+    --fill: #f1f1ed;
+    --fill2: #e4e4df;
+    --txt: #cbcbc5;
+    --ink: #222;
+    --accent: #1d7a8c;
+    --plan: #e0603f;
+    --ok: #2f9d5b;
+    --part: #c98a00;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d9d9d4; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; color: var(--ink); }
+  body.only { background: #fff; }
+  .doc-title { width: 1600px; margin: 32px auto 0; font-size: 14px; color: #555; }
+  .canvas { width: 1600px; height: 900px; margin: 24px auto; background: #fff; position: relative; overflow: hidden;
+            padding: 26px 30px 0; display: flex; flex-direction: column; }
+  body.only .canvas { margin: 0; }
+
+  /* ── canvas header ── */
+  .chead { display: flex; align-items: center; gap: 16px; height: 46px; margin-bottom: 16px; }
+  .cnum { font-size: 15px; color: var(--soft); font-variant-numeric: tabular-nums; letter-spacing: .05em; }
+  .ctitle { font-size: 30px; font-weight: 800; letter-spacing: -.01em; }
+  .route { font-family: 'SF Mono', Menlo, monospace; font-size: 15px; background: #f0f0ec; border: 1px solid #ddd; padding: 3px 10px; border-radius: 6px; }
+  .status { margin-left: auto; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 2px solid; }
+  .status.ok { color: var(--ok); border-color: var(--ok); }
+  .status.part { color: var(--part); border-color: var(--part); }
+  .brand { font-size: 13px; color: var(--soft); margin-left: 14px; }
+
+  /* ── canvas body: browser + notes ── */
+  .cbody { display: grid; grid-template-columns: 1060px 1fr; gap: 34px; flex: 1; min-height: 0; padding-bottom: 26px; }
+  .browser { border: 2px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; background: #fff; }
+  .bbar { height: 30px; background: #ecece8; border-bottom: 2px solid var(--line); display: flex; align-items: center; gap: 6px; padding: 0 10px; flex: none; }
+  .bbar i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--line); }
+  .bbar .url { margin-left: 12px; flex: 1; height: 18px; background: #fff; border: 1.5px solid #aaa; border-radius: 9px; font: 11px Menlo, monospace; color: #555; padding: 1px 10px; }
+  .vp { flex: 1; position: relative; overflow: hidden; font-size: 11px; }
+
+  .notes { display: flex; flex-direction: column; gap: 13px; padding-top: 4px; }
+  .notes h3 { margin: 0 0 2px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); }
+  .note { display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: 15px; line-height: 1.4; }
+  .note b { display: block; font-size: 15px; }
+  .note span.t { color: #444; }
+  .note .n { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px;
+             display: grid; place-items: center; }
+  .note.planned .n { background: var(--plan); }
+  .legend { margin-top: auto; font-size: 12.5px; color: var(--soft); display: flex; gap: 16px; align-items: center; }
+  .legend .sw { display: inline-block; width: 22px; height: 12px; border: 1.5px solid var(--line); background: var(--fill); vertical-align: -1px; margin-right: 5px; }
+  .legend .sw.p { border: 1.5px dashed var(--plan); background: #fdf1ed; }
+
+  /* ── wireframe primitives ── */
+  .rel { position: relative; }
+  .bx { border: 1.5px solid var(--line); border-radius: 6px; background: var(--fill); }
+  .wh { background: #fff; }
+  .dk { background: #5b5b58; border-color: #3a3a38; color: #eee; }
+  .ph { border: 1.5px solid var(--soft); border-radius: 6px; background-color: var(--fill2);
+        background-image: linear-gradient(to top right, transparent calc(50% - .8px), #b5b5ae calc(50% - .8px), #b5b5ae calc(50% + .8px), transparent calc(50% + .8px)),
+                          linear-gradient(to bottom right, transparent calc(50% - .8px), #b5b5ae calc(50% - .8px), #b5b5ae calc(50% + .8px), transparent calc(50% + .8px));
+        display: grid; place-items: center; color: #666; font-size: 11px; }
+  .ph > span:not(.mk) { background: var(--fill2); padding: 2px 6px; border-radius: 4px; }
+  .circ { border-radius: 50%; }
+  .tl { background: repeating-linear-gradient(to bottom, var(--txt) 0 5px, transparent 5px 11px); height: 27px; }
+  .tl.one { height: 5px; }
+  .tl.two { height: 16px; }
+  .tl.dk2 { background: repeating-linear-gradient(to bottom, #8d8d88 0 5px, transparent 5px 11px); }
+  .h1 { font-size: 22px; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
+  .h2 { font-size: 15px; font-weight: 800; }
+  .h3 { font-size: 12px; font-weight: 700; }
+  .k { font-size: 8.5px; text-transform: uppercase; letter-spacing: .12em; color: #777; font-weight: 700; }
+  .mut { color: #777; }
+  .bt { display: inline-block; border: 1.5px solid #333; border-radius: 999px; padding: 4px 12px; font-size: 11px; font-weight: 600; background: #fff; white-space: nowrap; }
+  .bt.pri { background: #333; color: #fff; }
+  .bt.sm { padding: 2px 9px; font-size: 10px; }
+  .bt.lg { padding: 7px 16px; font-size: 12px; }
+  .chip { display: inline-block; border: 1.2px solid #888; border-radius: 4px; padding: 0 5px; font-size: 9px; font-weight: 700; background: #fff; }
+  .tab { display: inline-block; border: 1.2px solid #999; border-radius: 999px; padding: 2px 9px; font-size: 9.5px; background: #fff; }
+  .tab.on { background: #333; border-color: #333; color: #fff; }
+  .meter { height: 7px; border: 1.2px solid #777; border-radius: 4px; background: #fff; position: relative; overflow: hidden; }
+  .meter::after { content: ''; position: absolute; inset: 0; width: var(--v, 60%); background: #9a9a94; }
+  .row { display: flex; gap: 10px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 8px; }
+  .g { display: grid; gap: 10px; }
+  .pad { padding: 10px 12px; }
+  .grow { flex: 1; }
+  .plan { border: 1.8px dashed var(--plan) !important; background: #fdf3ef !important; }
+  .ptag { position: absolute; top: -9px; right: 8px; background: var(--plan); color: #fff; font-size: 8.5px; font-weight: 800;
+          letter-spacing: .08em; padding: 2px 6px; border-radius: 3px; }
+  .mk { position: absolute; top: -11px; left: -11px; width: 23px; height: 23px; border-radius: 50%; background: var(--accent); color: #fff;
+        font-size: 12px; font-weight: 800; display: grid; place-items: center; z-index: 5; box-shadow: 0 0 0 2.5px #fff; }
+  .mk.p { background: var(--plan); }
+  .mk.r { left: auto; right: -11px; }
+
+  /* shared page chrome inside the viewport */
+  .nav { height: 34px; border-bottom: 1.5px solid var(--line); display: flex; align-items: center; gap: 18px; padding: 0 16px; background: #fff; }
+  .logo { font-weight: 800; font-size: 12px; }
+  .nlinks { margin-left: auto; display: flex; gap: 16px; color: #555; font-size: 10.5px; }
+  .foot { border-top: 1.5px solid var(--line); background: var(--fill); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 9.5px; color: #666; }
+  .pg { padding: 12px 20px; }
+  .sec { padding: 8px 20px 8px 42px; border-bottom: 1px dashed #ccc; }
+
+  /* ── sitemap ── */
+  .map-area { position: relative; flex: 1; margin-bottom: 26px; }
+  .node { position: absolute; width: 236px; border: 2px solid var(--line); border-radius: 10px; background: var(--fill); padding: 10px 14px; }
+  .node .r { font: 12px Menlo, monospace; color: #555; }
+  .node .nm { font-size: 19px; font-weight: 800; margin: 2px 0 3px; }
+  .node .ds { font-size: 12.5px; color: #444; line-height: 1.35; min-height: 34px; }
+  .node .st { margin-top: 6px; font-size: 11.5px; font-weight: 700; }
+  .node .st.ok { color: var(--ok); }
+  .node .st.part { color: var(--part); }
+  .node.core { background: #e6f1f2; border-color: var(--accent); }
+  .map-area svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .elab { position: absolute; font-size: 12px; color: #555; background: #fff; padding: 1px 6px; border-radius: 4px; }
+  .navband { position: absolute; left: 0; right: 0; top: 0; border: 1.5px solid #bbb; border-radius: 8px; padding: 8px 14px; font-size: 13.5px; color: #444; background: #fafaf8; }
+
+  /* ── turn loop ── */
+  .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 46px; flex: 1; margin-bottom: 18px; position: relative; }
+  .stage { display: flex; flex-direction: column; gap: 10px; }
+  .stage .lbl { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+  .screen { border: 2px solid var(--line); border-radius: 8px; height: 540px; position: relative; overflow: hidden; background: #fff; font-size: 10.5px; }
+  .stage p { margin: 0; font-size: 14px; line-height: 1.45; color: #333; }
+  .arrow { position: absolute; top: 300px; font-size: 30px; color: var(--accent); font-weight: 800; }
+  .dim { position: absolute; inset: 0; background: rgb(60 60 58 / .45); }
+  .modal { position: absolute; background: #fff; border: 1.8px solid var(--line); border-radius: 8px; padding: 12px; }
+  .back { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; border: 2px dashed var(--accent); border-top: none; border-radius: 0 0 14px 14px; }
+</style>
+</head>
+<body>
+<div class="doc-title">Island 2050: wireframes for all 8 pages · Web Programming final project · open with <code>?only=home</code> etc. to view one page</div>
+
+<!-- ═════════════════════════ 00 SITEMAP ═════════════════════════ -->
+<section class="canvas" id="sitemap">
+  <div class="chead">
+    <span class="cnum">00</span><span class="ctitle">Site map &amp; user flow</span>
+    <span class="brand">8 pages · React Router</span>
+    <span class="status ok" style="margin-left:auto">5 built · 3 partial</span>
+  </div>
+  <div class="map-area">
+    <div class="navband"><b>Top navigation on every page:</b> &nbsp;Island 2050 logo → Home &nbsp;·&nbsp; Learn &nbsp;·&nbsp; The SDGs &nbsp;·&nbsp; Hall of Islands &nbsp;·&nbsp; About &nbsp;·&nbsp; <b>[Play / Continue]</b> button</div>
+
+    <svg viewBox="0 0 1540 786" preserveAspectRatio="none">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d7a8c"/></marker>
+        <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#888"/></marker>
+      </defs>
+      <!-- main flow -->
+      <g stroke="#1d7a8c" stroke-width="3.5" fill="none" marker-end="url(#ah)">
+        <path d="M276 160 L 340 160"/>
+        <path d="M576 160 L 640 160"/>
+        <path d="M876 160 L 940 160"/>
+        <path d="M1176 160 L 1240 160"/>
+      </g>
+      <!-- game loop -->
+      <g stroke="#1d7a8c" stroke-width="2.5" fill="none">
+        <path d="M720 214 L 720 298" marker-end="url(#ah)"/>
+        <path d="M800 298 L 800 216" marker-end="url(#ah)"/>
+      </g>
+      <!-- secondary links -->
+      <g stroke="#888" stroke-width="2" fill="none" stroke-dasharray="7 6" marker-end="url(#ag)">
+        <path d="M158 214 L 158 498"/>
+        <path d="M1058 214 C 1058 380, 760 420, 760 498"/>
+        <path d="M276 570 L 640 570"/>
+        <path d="M1358 214 L 1358 498"/>
+      </g>
+    </svg>
+
+    <div class="node" style="left:40px;top:90px"><div class="r">/</div><div class="nm">Home</div><div class="ds">Animated island, pitch, how it works, the 6 SDGs, citizens</div><div class="st ok">✅ Built</div></div>
+    <div class="node" style="left:340px;top:90px"><div class="r">/play/setup</div><div class="nm">Setup</div><div class="ds">Name the island, pick a difficulty, meet the advisor</div><div class="st ok">✅ Built</div></div>
+    <div class="node core" style="left:640px;top:90px"><div class="r">/play</div><div class="nm">Game</div><div class="ds">The dashboard: map, stats, policy cards, pop-ups</div><div class="st ok">✅ Built (core of the project)</div></div>
+    <div class="node" style="left:940px;top:90px"><div class="r">/play/results</div><div class="nm">Results</div><div class="ds">2050 report card, ending, chart, decision timeline</div><div class="st ok">✅ Built</div></div>
+    <div class="node" style="left:1240px;top:90px"><div class="r">/hall</div><div class="nm">Hall of Islands</div><div class="ds">Past games. Global leaderboard planned</div><div class="st part">🟡 Local only · global in Dec</div></div>
+
+    <div class="node" style="left:600px;top:300px;width:320px;background:#fff;border-style:dashed;border-color:#1d7a8c">
+      <div class="r">inside /play · 12 terms (2026 → 2050)</div>
+      <div class="nm" style="font-size:16px">Plan → Event → Report → next term</div>
+      <div class="ds">Story chapters in 2026 and 2036 · election every 4 years · voted out below 35%</div>
+    </div>
+
+    <div class="node" style="left:40px;top:500px"><div class="r">/sdgs</div><div class="nm">The SDGs</div><div class="ds">How the game measures each of the 6 goals</div><div class="st ok">✅ Built</div></div>
+    <div class="node" style="left:640px;top:500px"><div class="r">/learn</div><div class="nm">Learn</div><div class="ds">17 policies with real Taiwan &amp; world context</div><div class="st part">🟡 Sources being verified</div></div>
+    <div class="node" style="left:1240px;top:500px"><div class="r">/about</div><div class="nm">About</div><div class="ds">Creator, motivation, tech stack, sources, AI use</div><div class="st part">🟡 Draft · text to write</div></div>
+
+    <span class="elab" style="left:290px;top:128px">Begin</span>
+    <span class="elab" style="left:588px;top:128px">Start</span>
+    <span class="elab" style="left:884px;top:128px">2050</span>
+    <span class="elab" style="left:1184px;top:128px">saved</span>
+    <span class="elab" style="left:168px;top:360px">“How the game measures each goal”</span>
+    <span class="elab" style="left:880px;top:420px">“Explore the policies”</span>
+    <span class="elab" style="left:330px;top:545px">each SDG links to its policies (/learn#id)</span>
+    <span class="elab" style="left:1368px;top:360px">via nav</span>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 01 HOME ═════════════════════════ -->
+<section class="canvas" id="home">
+  <div class="chead"><span class="cnum">01 / 08</span><span class="ctitle">Home</span><span class="route">/</span><span class="status ok">✅ Built</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /</div></div>
+      <div class="vp">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Play</span></div>
+
+        <!-- hero -->
+        <div class="sec" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:12px 20px 12px 42px;background:#f7f7f4">
+          <div class="col" style="gap:9px;justify-content:center">
+            <span class="k">An SDG simulation game</span>
+            <div class="h1">One island.<br>Twenty-four years.<br><i>Every choice counts.</i></div>
+            <div class="tl" style="width:90%"></div>
+            <div class="row rel" style="width:fit-content"><span class="mk r">2</span><span class="bt pri lg">Begin your term →</span><span class="bt lg" style="border-style:dashed">Continue Penglai</span></div>
+            <span class="mut" style="font-size:9.5px">⏱ About 10 minutes · No sign-up · Progress saves automatically</span>
+          </div>
+          <div class="col rel" style="gap:6px"><span class="mk">1</span>
+            <div class="ph" style="height:150px"><span>Island map (SVG, animated)</span></div>
+            <div class="tl one" style="width:70%;margin:0 auto"></div>
+            <div class="row" style="justify-content:center;gap:6px"><span class="tab on">2026 · Today</span><span class="tab">2050 · If we act</span><span class="tab">2050 · If we don’t</span></div>
+          </div>
+        </div>
+
+        <!-- how it works -->
+        <div class="sec rel"><span class="mk" style="left:10px;top:10px">3</span>
+          <span class="k">How it works</span><div class="h2" style="margin:2px 0 7px">Twelve terms to shape a future</div>
+          <div class="g" style="grid-template-columns:repeat(4,1fr)">
+            <div class="bx wh pad"><div class="h3">📜 01 Pass policies</div><div class="tl two" style="margin-top:5px"></div></div>
+            <div class="bx wh pad"><div class="h3">🌀 02 Face the world</div><div class="tl two" style="margin-top:5px"></div></div>
+            <div class="bx wh pad"><div class="h3">🗳️ 03 Answer to your people</div><div class="tl two" style="margin-top:5px"></div></div>
+            <div class="bx wh pad"><div class="h3">📊 04 See your 2050</div><div class="tl two" style="margin-top:5px"></div></div>
+          </div>
+        </div>
+
+        <!-- SDGs -->
+        <div class="sec rel" style="background:#f7f7f4"><span class="mk" style="left:10px;top:10px">4</span>
+          <span class="k">What’s at stake</span><div class="h2" style="margin:2px 0 7px">Six goals. They don’t always agree.</div>
+          <div class="g" style="grid-template-columns:repeat(6,1fr);gap:7px">
+            <div class="bx wh" style="padding:6px"><b>7</b> Energy<div class="tl one" style="margin-top:4px"></div></div>
+            <div class="bx wh" style="padding:6px"><b>13</b> Climate<div class="tl one" style="margin-top:4px"></div></div>
+            <div class="bx wh" style="padding:6px"><b>11</b> Cities<div class="tl one" style="margin-top:4px"></div></div>
+            <div class="bx wh" style="padding:6px"><b>6</b> Water<div class="tl one" style="margin-top:4px"></div></div>
+            <div class="bx wh" style="padding:6px"><b>8</b> Economy<div class="tl one" style="margin-top:4px"></div></div>
+            <div class="bx wh" style="padding:6px"><b>14·15</b> Nature<div class="tl one" style="margin-top:4px"></div></div>
+          </div>
+          <span class="bt pri sm" style="margin-top:7px">How the game measures each goal →</span>
+        </div>
+
+        <!-- citizens -->
+        <div class="sec rel"><span class="mk" style="left:10px;top:10px">5</span>
+          <span class="k">The people</span><div class="h2" style="margin:2px 0 7px">Meet the islanders</div>
+          <div class="row" style="justify-content:space-around">
+            <div class="col" style="align-items:center;gap:3px"><div class="ph circ" style="width:32px;height:32px"></div><b>Ah-Hai</b><span class="mut" style="font-size:9px">fisherman</span></div>
+            <div class="col" style="align-items:center;gap:3px"><div class="ph circ" style="width:32px;height:32px"></div><b>Mei</b><span class="mut" style="font-size:9px">student</span></div>
+            <div class="col" style="align-items:center;gap:3px"><div class="ph circ" style="width:32px;height:32px"></div><b>Wei</b><span class="mut" style="font-size:9px">factory worker</span></div>
+            <div class="col" style="align-items:center;gap:3px"><div class="ph circ" style="width:32px;height:32px"></div><b>Grandma Lin</b><span class="mut" style="font-size:9px">rice farmer</span></div>
+            <div class="col" style="align-items:center;gap:3px"><div class="ph circ" style="width:32px;height:32px"></div><b>Kai</b><span class="mut" style="font-size:9px">chip engineer</span></div>
+          </div>
+        </div>
+
+        <!-- why island + cta -->
+        <div class="rel" style="display:grid;grid-template-columns:1fr 1.6fr;gap:18px;padding:10px 20px 10px 42px;background:#5b5b58;color:#eee"><span class="mk" style="left:10px;top:10px">6</span>
+          <div><span class="k" style="color:#ccc">Why an island?</span><div class="h2">Islands feel the future first.</div></div>
+          <div class="tl dk2"></div>
+        </div>
+        <div class="row" style="justify-content:center;padding:9px;gap:14px"><span class="h2">The people of Penglai are waiting.</span><span class="bt pri">Take office →</span></div>
+        <div class="foot"><span>◐ Island 2050 · A Web Programming final project</span><span>Play · Learn · The SDGs · Hall · About · UN SDGs ↗</span></div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Three possible futures</b><span class="t">The island map cycles every 5 s between today, 2050 if we act, and 2050 if we don’t. Clicking a tab pauses it.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>Main call to action</b><span class="t">“Begin your term” goes to Setup. “Continue” only appears when a game is saved.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>How it works</b><span class="t">The turn loop in four steps.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>The six SDGs</b><span class="t">In official UN colors, each with a one-line reason. Links to the SDGs page.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>The citizens</b><span class="t">Five islanders (all played by the creator) and what each one cares about.</span></div></div>
+      <div class="note"><div class="n">6</div><div><b>Why an island + final CTA</b><span class="t">The link to Taiwan, then one more “Take office” button.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 02 SETUP ═════════════════════════ -->
+<section class="canvas" id="setup">
+  <div class="chead"><span class="cnum">02 / 08</span><span class="ctitle">Setup</span><span class="route">/play/setup</span><span class="status ok">✅ Built</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /play/setup</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Play</span></div>
+        <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:28px;padding:70px 46px">
+          <div class="bx wh col" style="padding:24px 26px;gap:16px">
+            <div><span class="k">New game</span><div class="h1" style="font-size:28px">Take office</div></div>
+            <div class="col rel" style="gap:5px"><span class="mk r">1</span>
+              <span class="h3">Name your island</span>
+              <div class="bx wh" style="height:32px;padding:7px 10px;font-size:13px">Penglai</div>
+              <span class="mut" style="font-size:10px">“Penglai” (蓬萊) is an old poetic name for a mythical island paradise.</span>
+            </div>
+            <div class="col rel" style="gap:6px"><span class="mk r">2</span>
+              <span class="h3">Difficulty</span>
+              <div class="g" style="grid-template-columns:repeat(3,1fr)">
+                <div class="bx wh pad col" style="gap:4px"><b style="font-size:12px">○ Relaxed</b><div class="tl two"></div><span class="mut" style="font-size:9.5px">Starting budget $420M</span></div>
+                <div class="bx pad col" style="gap:4px;border-width:2.5px;background:#e8e8e3"><b style="font-size:12px">● Standard</b><div class="tl two"></div><span class="mut" style="font-size:9.5px">Starting budget $320M</span></div>
+                <div class="bx wh pad col" style="gap:4px"><b style="font-size:12px">○ Hard</b><div class="tl two"></div><span class="mut" style="font-size:9.5px">Starting budget $240M</span></div>
+              </div>
+            </div>
+            <div class="rel" style="border:1.5px dashed #999;border-radius:6px;padding:8px 10px;font-size:10.5px;color:#555"><span class="mk">3</span>⚠️ You have a game in progress on <b>Penglai</b> (2034). Starting a new one will replace it. <u>Continue it instead</u></div>
+            <div class="rel" style="width:fit-content"><span class="mk">5</span><span class="bt pri lg">Begin in 2026 →</span></div>
+          </div>
+          <div class="col rel" style="gap:16px"><span class="mk">4</span>
+            <div class="bx wh row" style="padding:16px;gap:14px;align-items:flex-start">
+              <div class="ph circ" style="width:64px;height:64px;flex:none"></div>
+              <div class="col grow" style="gap:6px"><b style="font-size:13px">Chief Advisor</b><div class="tl"></div></div>
+            </div>
+            <div class="col" style="gap:9px;padding:4px 6px;font-size:12px">
+              <div>🗓 <b>12 terms</b> of 2 years each <div class="tl one" style="width:70%;margin-top:4px"></div></div>
+              <div>📜 <b>Up to 2 policies</b> per term <div class="tl one" style="width:80%;margin-top:4px"></div></div>
+              <div>🌀 <b>One event</b> every term <div class="tl one" style="width:65%;margin-top:4px"></div></div>
+              <div>🗳 <b>Elections</b> every 4 years <div class="tl one" style="width:75%;margin-top:4px"></div></div>
+              <div>📊 <b>Six SDGs</b> scored at the end <div class="tl one" style="width:60%;margin-top:4px"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Island name</b><span class="t">Up to 24 characters. It appears in the story text, the report card and the Hall.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>Difficulty</b><span class="t">Changes the starting budget and how hard the climate events hit.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>Overwrite warning</b><span class="t">Only shown when there is a saved game, so it isn’t lost by accident.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>The advisor explains the rules</b><span class="t">12 terms, 2 policies per term, 1 event, elections, 6 SDGs, before the game starts.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>Start</b><span class="t">Creates a new game and opens the Game page with the first story chapter.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 03 GAME ═════════════════════════ -->
+<section class="canvas" id="game">
+  <div class="chead"><span class="cnum">03 / 08</span><span class="ctitle">Game: dashboard</span><span class="route">/play</span><span class="status ok">✅ Built · core of the project</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /play</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Continue</span></div>
+        <!-- HUD -->
+        <div class="rel" style="display:flex;align-items:center;gap:24px;padding:8px 16px;border-bottom:1.5px solid var(--line);background:#fff"><span class="mk" style="left:4px;top:4px">1</span>
+          <div style="width:200px;padding-left:14px"><b style="font-size:13px">Penglai</b><div class="mut" style="font-size:9.5px">2032–2033 · Term 4/12</div><div class="meter" style="--v:33%;height:5px;margin-top:3px"></div></div>
+          <div><span class="k">Budget</span><div style="font-size:14px;font-weight:800">💰 $340M</div><span class="mut" style="font-size:9px">+$45M / term</span></div>
+          <div><span class="k">Approval</span><div style="font-size:14px;font-weight:800">👍 62%</div><span class="mut" style="font-size:9px">need 35% · next election 2034</span></div>
+          <div class="row" style="margin-left:auto;gap:6px"><span class="bt sm">? How to play</span><span class="bt sm">Save &amp; exit</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 238px;gap:12px;padding:12px 14px">
+          <div class="col" style="gap:10px">
+            <div class="ph rel" style="height:290px;background-color:#e1e6e6"><span class="mk">2</span><span>Island map (SVG): turbines, smog, reservoir, city, floods</span><span class="chip" style="position:absolute;left:8px;bottom:8px">2032–2033</span></div>
+            <div class="bx wh rel" style="padding:10px 12px"><span class="mk">3</span>
+              <div class="h2" style="font-size:13px">Policies this term</div>
+              <div class="tl one" style="width:55%;margin:4px 0 8px"></div>
+              <div class="row" style="gap:5px;margin-bottom:8px"><span class="tab on">All 17</span><span class="tab">Energy 6</span><span class="tab">Cities 4</span><span class="tab">Nature 3</span><span class="tab">Economy 2</span><span class="tab">Water 2</span></div>
+              <div class="g" style="grid-template-columns:repeat(5,1fr);gap:7px">
+                <div class="bx pad col" style="gap:4px;border-width:2.5px;background:#e8e8e3;padding:7px"><div class="row" style="justify-content:space-between"><span>🌬️ <span class="k">Energy</span></span><b>✓</b></div><b style="font-size:10.5px">Offshore Wind Farm</b><div class="tl two"></div><div class="row" style="gap:3px"><span class="chip">7</span><span class="chip">13</span></div><b>$120M</b></div>
+                <div class="bx wh col" style="gap:4px;padding:7px"><span>💸 <span class="k">Economy</span></span><b style="font-size:10.5px">Carbon Tax</b><div class="tl two"></div><div class="row" style="gap:3px"><span class="chip">13</span></div><b>Free · earns</b></div>
+                <div class="bx wh col" style="gap:4px;padding:7px"><span>🚇 <span class="k">Cities</span></span><b style="font-size:10.5px">MRT Expansion</b><div class="tl two"></div><div class="row" style="gap:3px"><span class="chip">11</span><span class="chip">13</span></div><b>$100M</b></div>
+                <div class="bx wh col" style="gap:4px;padding:7px"><span>🌿 <span class="k">Nature</span></span><b style="font-size:10.5px">Wetland Restoration</b><div class="tl two"></div><div class="row" style="gap:3px"><span class="chip">14</span><span class="chip">11</span></div><b>$30M</b></div>
+                <div class="bx col" style="gap:4px;padding:7px;opacity:.55;border-style:dotted"><span>⚛️ <span class="k">Energy</span></span><b style="font-size:10.5px">Nuclear Restart</b><div class="tl two"></div><span style="font-size:9px">🔒 Not enough budget</span></div>
+              </div>
+              <div class="rel row" style="margin-top:10px;border-top:1px solid #ccc;padding-top:8px"><span class="mk" style="top:-3px">4</span>
+                <span style="padding-left:16px"><b>1/2</b> selected · Cost <b>$120M</b> · Left after <b>$220M</b></span>
+                <span class="bt pri" style="margin-left:auto">Pass policies &amp; end term →</span>
+              </div>
+            </div>
+          </div>
+          <!-- side panel -->
+          <div class="col" style="gap:9px">
+            <div class="bx wh rel" style="padding:9px 10px"><span class="mk">5</span>
+              <div class="row" style="justify-content:space-between"><b style="font-size:11.5px">SDG scores</b><b style="font-size:15px">64<span class="mut" style="font-size:9px">/100</span></b></div>
+              <div class="col" style="gap:5px;margin-top:6px">
+                <div class="row" style="gap:5px"><span class="chip">7</span><span style="width:46px">Energy</span><div class="meter grow" style="--v:72%"></div></div>
+                <div class="row" style="gap:5px"><span class="chip">13</span><span style="width:46px">Climate</span><div class="meter grow" style="--v:48%"></div></div>
+                <div class="row" style="gap:5px"><span class="chip">11</span><span style="width:46px">Cities</span><div class="meter grow" style="--v:60%"></div></div>
+                <div class="row" style="gap:5px"><span class="chip">6</span><span style="width:46px">Water</span><div class="meter grow" style="--v:66%"></div></div>
+                <div class="row" style="gap:5px"><span class="chip">8</span><span style="width:46px">Economy</span><div class="meter grow" style="--v:78%"></div></div>
+                <div class="row" style="gap:5px"><span class="chip">14</span><span style="width:46px">Nature</span><div class="meter grow" style="--v:40%"></div></div>
+              </div>
+            </div>
+            <div class="bx wh" style="padding:9px 10px"><b style="font-size:11.5px">Island stats</b>
+              <div class="g" style="grid-template-columns:repeat(4,1fr);gap:4px;margin-top:5px">
+                <div class="bx" style="padding:3px;text-align:center">📈 71</div><div class="bx" style="padding:3px;text-align:center">🏭 58</div><div class="bx" style="padding:3px;text-align:center">🔋 34%</div><div class="bx" style="padding:3px;text-align:center">💧 63</div>
+                <div class="bx" style="padding:3px;text-align:center">🌫️ 55</div><div class="bx" style="padding:3px;text-align:center">🌳 41</div><div class="bx" style="padding:3px;text-align:center">🛡️ 47</div>
+              </div>
+            </div>
+            <div class="bx wh rel" style="padding:9px 10px"><span class="mk">6</span><b style="font-size:11.5px">Citizens</b>
+              <div class="row" style="justify-content:space-between;margin-top:5px">
+                <div class="ph circ" style="width:30px;height:30px"></div><div class="ph circ" style="width:30px;height:30px"></div><div class="ph circ" style="width:30px;height:30px"></div><div class="ph circ" style="width:30px;height:30px"></div><div class="ph circ" style="width:30px;height:30px"></div>
+              </div>
+              <div class="row mut" style="justify-content:space-between;font-size:8.5px;margin-top:2px"><span>😊</span><span>😐</span><span>😠</span><span>😊</span><span>😐</span></div>
+            </div>
+            <div class="bx wh rel" style="padding:9px 10px"><span class="mk">7</span><b style="font-size:11.5px">Your projects</b>
+              <div class="row" style="justify-content:space-between;margin-top:5px"><span>☀️ Rooftop Solar</span><span class="chip">Active</span></div>
+              <div class="row" style="justify-content:space-between;margin-top:4px"><span>💧 Water Recycling</span><span class="chip">🚧 ready 2034</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>HUD</b><span class="t">Term progress, budget and income per term, approval against the 35% line, and the next election year.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>Living island map</b><span class="t">Hand-coded SVG redrawn from the game state. Every policy adds a drawing, and pollution, drought and floods are visible.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>Policy tray</b><span class="t">Category filters with counts. Each card shows cost, upkeep, build time, effects and SDGs. Cards you can’t afford are locked and moved to the end.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>End bar</b><span class="t">Pick up to 2, watch the running total, then end the term.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>Live SDG scores</b><span class="t">Six meters plus the overall average.</span></div></div>
+      <div class="note"><div class="n">6</div><div><b>Citizen moods</b><span class="t">Faces switch between happy, neutral and angry as the stats they care about change.</span></div></div>
+      <div class="note"><div class="n">7</div><div><b>Projects</b><span class="t">What’s active and what’s still being built.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 03b TURN LOOP ═════════════════════════ -->
+<section class="canvas" id="turn">
+  <div class="chead"><span class="cnum">03 / 08</span><span class="ctitle">Game: one term, step by step</span><span class="route">/play</span><span class="status ok">✅ Built</span></div>
+  <div class="loop">
+    <div class="stage">
+      <span class="lbl">① Story chapter</span>
+      <div class="screen" style="background:#5b5b58">
+        <div style="padding:46px 26px;color:#eee" class="col">
+          <span class="k" style="color:#ccc">Chapter 1 · 2026</span>
+          <div class="h1" style="color:#fff">The Inauguration</div>
+          <div class="row" style="align-items:flex-start;gap:12px;margin-top:14px">
+            <div class="ph circ" style="width:52px;height:52px;flex:none"></div>
+            <div class="col grow" style="gap:6px"><b>Chief Advisor</b><div class="tl dk2"></div><div class="tl dk2"></div></div>
+          </div>
+          <div class="row" style="justify-content:flex-end;margin-top:auto;padding-top:250px"><span class="bt sm" style="background:transparent;color:#eee;border-color:#ccc">Skip</span><span class="bt" style="background:#fff;color:#333">Continue</span></div>
+        </div>
+      </div>
+      <p><b>Full screen, 2026 and 2036.</b> The advisor’s lines appear one at a time. The 2036 “Turning Point” text depends on how well you are doing.</p>
+    </div>
+    <div class="stage">
+      <span class="lbl">② Plan</span>
+      <div class="screen" style="background:#f7f7f4">
+        <div style="height:26px;border-bottom:1.5px solid var(--line);background:#fff;padding:5px 8px" class="row"><b>Penglai</b><span class="mut">Term 4/12</span><span style="margin-left:auto">💰 👍</span></div>
+        <div style="display:grid;grid-template-columns:1fr 70px;gap:6px;padding:8px">
+          <div class="col" style="gap:6px"><div class="ph" style="height:120px"></div>
+            <div class="g" style="grid-template-columns:repeat(3,1fr);gap:4px"><div class="bx wh" style="height:70px"></div><div class="bx wh" style="height:70px;border-width:2.5px"></div><div class="bx wh" style="height:70px"></div></div>
+            <div class="row"><span class="bt pri sm" style="margin-left:auto">End term →</span></div>
+          </div>
+          <div class="col" style="gap:5px"><div class="bx wh" style="height:80px"></div><div class="bx wh" style="height:44px"></div><div class="bx wh" style="height:60px"></div></div>
+        </div>
+        <div class="modal" style="left:30px;right:30px;bottom:26px;border-style:dashed;padding:9px">
+          <b>Tutorial (first game only)</b><div class="tl two" style="margin-top:4px"></div><div class="row" style="margin-top:4px"><span class="mut">Step 2 / 6</span><span class="bt sm" style="margin-left:auto">Next</span></div>
+        </div>
+      </div>
+      <p><b>The dashboard</b> (previous slide). Choose up to 2 policies within budget. On the first game a 6-step spotlight tour explains each panel.</p>
+    </div>
+    <div class="stage">
+      <span class="lbl">③ Event</span>
+      <div class="screen" style="background:#f7f7f4">
+        <div class="dim"></div>
+        <div class="modal col" style="left:18px;right:18px;top:26px;bottom:26px;gap:7px">
+          <div style="font-size:26px;text-align:center">🌀</div>
+          <span class="k" style="text-align:center">Event · 2032–2033</span>
+          <div class="h2" style="text-align:center">Typhoon</div>
+          <div class="tl two"></div>
+          <div class="row" style="gap:4px"><span class="k">Impact</span><span class="chip">🛡️ −8</span><span class="chip">📈 −4</span></div>
+          <div class="row bx" style="padding:6px;gap:6px;align-items:flex-start"><div class="ph circ" style="width:26px;height:26px;flex:none"></div><div class="tl two grow"></div></div>
+          <span class="k">What do you do?</span>
+          <div class="bx wh" style="padding:6px"><b>Fund emergency relief</b><div class="tl one" style="margin:4px 0;width:80%"></div><span class="chip">💰 −30</span> <span class="chip">👍 +6</span></div>
+          <div class="bx wh" style="padding:6px"><b>Leave it to local governments</b><div class="tl one" style="margin:4px 0;width:70%"></div><span class="chip">👍 −6</span></div>
+        </div>
+      </div>
+      <p><b>One event per term</b>, chosen at random and getting worse over time. Some events offer 2–3 choices, and a citizen reacts. Earlier policies decide how hard it hits.</p>
+    </div>
+    <div class="stage">
+      <span class="lbl">④ Term report</span>
+      <div class="screen" style="background:#f7f7f4">
+        <div class="dim"></div>
+        <div class="modal col" style="left:12px;right:12px;top:22px;bottom:22px;gap:7px">
+          <span class="k">Term report</span><div class="h2">2032–2033</div>
+          <div class="tl one" style="width:80%"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div class="col" style="gap:3px"><b style="font-size:9.5px">What changed</b>
+              <div class="row" style="justify-content:space-between"><span>👍</span><span class="mut">62 → 59</span><b>−3</b></div>
+              <div class="row" style="justify-content:space-between"><span>📈</span><span class="mut">71 → 73</span><b>+2</b></div>
+              <div class="row" style="justify-content:space-between"><span>🏭</span><span class="mut">58 → 54</span><b>−4</b></div>
+              <div class="row" style="justify-content:space-between"><span>🔋</span><span class="mut">34 → 41</span><b>+7</b></div>
+              <div class="row" style="justify-content:space-between"><span>💧</span><span class="mut">63 → 60</span><b>−3</b></div>
+              <div class="row" style="justify-content:space-between"><span>💰</span><span class="mut">$340M → $265M</span></div>
+            </div>
+            <div class="col" style="gap:5px"><b style="font-size:9.5px">What people are saying</b>
+              <div class="row" style="gap:4px;align-items:flex-start"><div class="ph circ" style="width:22px;height:22px;flex:none"></div><div class="tl two grow"></div></div>
+              <div class="row" style="gap:4px;align-items:flex-start"><div class="ph circ" style="width:22px;height:22px;flex:none"></div><div class="tl two grow"></div></div>
+              <div class="row" style="gap:4px;align-items:flex-start"><div class="ph circ" style="width:22px;height:22px;flex:none"></div><div class="tl two grow"></div></div>
+            </div>
+          </div>
+          <div class="bx" style="padding:7px;border-width:2px">🗳 <b>Election 2034</b> · re-elected with 59%</div>
+          <div class="row" style="margin-top:auto"><span class="bt pri sm" style="margin-left:auto">Continue to 2034 →</span></div>
+        </div>
+      </div>
+      <p><b>Before → after for every stat</b>, then citizen quotes. Every 4 years there is an election, and below 35% you are voted out. After term 12 this goes to the Results page.</p>
+    </div>
+    <span class="arrow" style="left:calc(25% - 34px)">→</span>
+    <span class="arrow" style="left:calc(50% - 32px)">→</span>
+    <span class="arrow" style="left:calc(75% - 30px)">→</span>
+  </div>
+  <div style="font-size:15px;color:#444;padding:0 0 22px;display:flex;gap:28px;align-items:center">
+    <span style="color:var(--accent);font-weight:800">↻ ② → ③ → ④ repeats 12 times (2026 → 2050)</span>
+    <span>· about 8–10 minutes per game</span>
+    <span>· saves automatically after every step</span>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 04 RESULTS ═════════════════════════ -->
+<section class="canvas" id="results">
+  <div class="chead"><span class="cnum">04 / 08</span><span class="ctitle">Results: 2050 report card</span><span class="route">/play/results</span><span class="status ok">✅ Built</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /play/results</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Play</span></div>
+        <div class="rel" style="display:grid;grid-template-columns:1.1fr 1fr;gap:24px;padding:16px 24px 16px 42px;background:#dfe7df;border-bottom:1.5px solid var(--line)"><span class="mk" style="left:10px;top:10px">1</span>
+          <div class="col" style="gap:7px;justify-content:center">
+            <span class="k">Penglai · 2050 · Standard</span>
+            <div style="font-size:26px">🌏</div>
+            <div class="h1" style="font-size:26px">Green Haven</div>
+            <div class="tl"></div>
+            <div class="row rel" style="width:fit-content"><span class="mk r">2</span><span class="bt pri">Play again</span><span class="bt">Copy result to share</span></div>
+          </div>
+          <div class="ph" style="height:180px"><span>Final island map</span></div>
+        </div>
+        <div class="col" style="padding:12px 24px;gap:10px">
+          <div class="bx wh rel" style="padding:10px 14px"><span class="mk">3</span>
+            <div class="row" style="justify-content:space-between"><div><span class="k">Report card</span><div class="h2">How Penglai did on the SDGs</div></div><div class="row" style="gap:6px"><b style="font-size:22px">74</b><span class="mut">/100</span><span class="bx" style="padding:2px 8px;font-weight:800;font-size:14px">B</span></div></div>
+            <div class="g" style="grid-template-columns:1fr 1fr;gap:5px 26px;margin-top:6px">
+              <div class="row" style="gap:6px"><span class="chip">7</span><span style="width:90px">Clean Energy</span><div class="meter grow" style="--v:81%"></div><b>81</b><span class="chip">A</span></div>
+              <div class="row" style="gap:6px"><span class="chip">6</span><span style="width:90px">Clean Water</span><div class="meter grow" style="--v:66%"></div><b>66</b><span class="chip">B</span></div>
+              <div class="row" style="gap:6px"><span class="chip">13</span><span style="width:90px">Climate Action</span><div class="meter grow" style="--v:77%"></div><b>77</b><span class="chip">B</span></div>
+              <div class="row" style="gap:6px"><span class="chip">8</span><span style="width:90px">Decent Work</span><div class="meter grow" style="--v:70%"></div><b>70</b><span class="chip">B</span></div>
+              <div class="row" style="gap:6px"><span class="chip">11</span><span style="width:90px">Sust. Cities</span><div class="meter grow" style="--v:72%"></div><b>72</b><span class="chip">B</span></div>
+              <div class="row" style="gap:6px"><span class="chip">14·15</span><span style="width:90px">Life</span><div class="meter grow" style="--v:62%"></div><b>62</b><span class="chip">C</span></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:10px">
+            <div class="bx wh rel" style="padding:10px 14px"><span class="mk">4</span>
+              <span class="k">Over time</span><div class="h3">Your island, year by year</div>
+              <svg viewBox="0 0 300 120" style="width:100%;height:178px;margin-top:4px">
+                <g stroke="#ddd"><line x1="20" y1="10" x2="295" y2="10"/><line x1="20" y1="45" x2="295" y2="45"/><line x1="20" y1="80" x2="295" y2="80"/><line x1="20" y1="110" x2="295" y2="110"/></g>
+                <polyline fill="none" stroke="#333" stroke-width="3" points="20,72 45,70 70,66 95,60 120,58 145,52 170,48 195,44 220,40 245,37 270,35 295,32"/>
+                <polyline fill="none" stroke="#999" stroke-width="2" points="20,40 45,38 70,42 95,40 120,36 145,38 170,34 195,33 220,30 245,31 270,29 295,28"/>
+                <polyline fill="none" stroke="#999" stroke-width="2" stroke-dasharray="5 4" points="20,30 45,34 70,40 95,48 120,56 145,64 170,70 195,78 220,84 245,88 270,92 295,96"/>
+                <polyline fill="none" stroke="#bbb" stroke-width="2" points="20,100 45,98 70,92 95,84 120,80 145,70 170,62 195,56 220,48 245,44 270,40 295,36"/>
+              </svg>
+              <div class="row mut" style="gap:8px;font-size:8.5px;justify-content:center"><span>━ SDG score</span><span>━ Economy</span><span>┅ Emissions</span><span>━ Renewables</span><span>━ Approval</span></div>
+            </div>
+            <div class="bx wh rel" style="padding:10px 14px"><span class="mk">5</span>
+              <span class="k">Your decisions</span><div class="h3">Timeline</div>
+              <div class="col" style="gap:6px;margin-top:6px">
+                <div class="row" style="gap:8px;align-items:flex-start"><b style="width:56px;font-size:9px">2026–27</b><div class="col grow" style="gap:3px"><div class="row" style="gap:4px"><span class="chip">💸 Carbon Tax</span><span class="chip">☀️ Rooftop Solar</span></div><span class="mut" style="font-size:9px">🌀 Typhoon → fund emergency relief</span></div></div>
+                <div class="row" style="gap:8px;align-items:flex-start"><b style="width:56px;font-size:9px">2028–29</b><div class="col grow" style="gap:3px"><div class="row" style="gap:4px"><span class="chip">🌬️ Offshore Wind</span></div><span class="mut" style="font-size:9px">🏜️ Drought → suspend farm irrigation</span></div></div>
+                <div class="row" style="gap:8px;align-items:flex-start"><b style="width:56px;font-size:9px">2030–31</b><div class="col grow" style="gap:3px"><span class="mut" style="font-size:9px">No new policies</span><span class="mut" style="font-size:9px">🔥 Heatwave → rolling blackouts</span></div></div>
+                <div class="row" style="gap:8px;align-items:flex-start"><b style="width:56px;font-size:9px">2032–33</b><div class="col grow" style="gap:3px"><div class="row" style="gap:4px"><span class="chip">🚇 MRT Expansion</span><span class="chip">🌿 Wetlands</span></div><span class="mut" style="font-size:9px">📢 Youth climate march → meet the marchers</span></div></div>
+                <div class="row" style="gap:8px;align-items:flex-start"><b style="width:56px;font-size:9px">2034–35</b><div class="col grow" style="gap:3px"><div class="row" style="gap:4px"><span class="chip">🏭 Phase Out Coal</span></div><span class="mut" style="font-size:9px">🐟 Fish stock collapse → ban fishing for a season</span></div></div>
+                <div class="tl one" style="width:50%"></div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:4px"><span class="rel" style="display:inline-block"><span class="mk" style="left:-32px;top:-3px">6</span><b style="font-size:12px">Want to understand what happened?</b> &nbsp; <span class="bt pri sm">Explore the policies</span> <span class="bt sm">Hall of Islands</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Your ending</b><span class="t">One of 6 endings (Green Haven, Balanced Future, Rich but Burning, Sinking Island, Struggling Island, Voted Out) next to your final island. The hero color matches the ending.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>Play again / share</b><span class="t">Copies a one-line result to the clipboard.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>Report card</b><span class="t">Overall score and an A–F grade for each SDG, with how it is measured.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>Chart over time</b><span class="t">Recharts line chart: SDG score, economy, emissions, renewables, approval.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>Decision timeline</b><span class="t">Every term’s policies and how you answered each event.</span></div></div>
+      <div class="note"><div class="n">6</div><div><b>Learn more</b><span class="t">Links to the Learn page and the Hall of Islands.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 05 LEARN ═════════════════════════ -->
+<section class="canvas" id="learn">
+  <div class="chead"><span class="cnum">05 / 08</span><span class="ctitle">Learn: policy encyclopedia</span><span class="route">/learn</span><span class="status part">🟡 Partial · sources being verified</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /learn</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span><u>Learn</u></span><span>The SDGs</span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Play</span></div>
+        <div style="padding:18px 34px 10px" class="col">
+          <span class="k">Policy encyclopedia</span>
+          <div class="h1">The real choices behind the game</div>
+          <div class="tl two" style="width:75%"></div>
+          <div class="row rel" style="gap:6px;width:fit-content;margin-top:4px"><span class="mk" style="left:-30px;top:0">1</span><span class="tab on">All</span><span class="tab">Energy</span><span class="tab">Cities</span><span class="tab">Nature</span><span class="tab">Economy</span><span class="tab">Water</span></div>
+        </div>
+        <div class="col" style="padding:4px 34px;gap:14px">
+          <!-- card 1 -->
+          <div class="bx wh rel" style="padding:14px 16px"><span class="mk">2</span>
+            <div class="row" style="gap:12px"><span style="font-size:24px">🌬️</span><div><span class="k">Energy</span><div class="h2">Offshore Wind Farm</div></div><div class="row" style="margin-left:auto;gap:4px"><span class="chip">7 Clean Energy</span><span class="chip">13 Climate</span></div></div>
+            <div class="tl two" style="margin:8px 0 10px;width:92%"></div>
+            <div class="g" style="grid-template-columns:repeat(3,1fr)">
+              <div class="bx rel" style="padding:9px"><span class="mk">3</span><b>🌏 In the real world</b><div class="tl" style="margin-top:5px"></div><div class="tl two"></div>
+                <div class="plan rel" style="margin-top:6px;padding:4px 6px;border-radius:4px;font-size:9.5px"><span class="mk p r">6</span>Source: Energy Administration, MOEA ↗</div></div>
+              <div class="bx rel" style="padding:9px"><span class="mk">4</span><b>⚖️ The tradeoff</b><div class="tl" style="margin-top:5px"></div><div class="tl two"></div></div>
+              <div class="bx rel" style="padding:9px"><span class="mk">5</span><b>🎮 In the game</b><div class="mut" style="font-size:9.5px;margin:4px 0">$120M · upkeep $8M/term · 4 years to build</div><div class="row" style="gap:4px"><span class="chip">🔋 +20</span><span class="chip">🏭 −15</span><span class="chip">🌳 −3</span></div><div class="row" style="gap:4px;margin-top:4px"><span class="chip">🔋 +1.5/term</span></div></div>
+            </div>
+          </div>
+          <!-- card 2 -->
+          <div class="bx wh" style="padding:14px 16px">
+            <div class="row" style="gap:12px"><span style="font-size:24px">💸</span><div><span class="k">Economy</span><div class="h2">Carbon Tax</div></div><div class="row" style="margin-left:auto;gap:4px"><span class="chip">13 Climate</span></div></div>
+            <div class="tl two" style="margin:8px 0 10px;width:85%"></div>
+            <div class="g" style="grid-template-columns:repeat(3,1fr)">
+              <div class="bx" style="padding:9px"><b>🌏 In the real world</b><div class="tl" style="margin-top:5px"></div><div class="plan" style="margin-top:6px;padding:4px 6px;border-radius:4px;font-size:9.5px">Source: Ministry of Environment ↗</div></div>
+              <div class="bx" style="padding:9px"><b>⚖️ The tradeoff</b><div class="tl" style="margin-top:5px"></div></div>
+              <div class="bx" style="padding:9px"><b>🎮 In the game</b><div class="mut" style="font-size:9.5px;margin:4px 0">Free · earns $12M/term</div><div class="row" style="gap:4px"><span class="chip">🏭 −8</span><span class="chip">👍 −8</span><span class="chip">🏭 −1/term</span></div></div>
+            </div>
+          </div>
+          <div class="bx wh" style="padding:14px 16px;height:80px">
+            <div class="row" style="gap:12px"><span style="font-size:24px">🚇</span><div><span class="k">Cities</span><div class="h2">MRT Expansion</div></div></div>
+            <div class="tl two" style="margin-top:8px;width:80%"></div>
+          </div>
+          <div class="mut" style="text-align:center;font-size:10.5px">… 17 policies in total · ends with “Try them in the game →”</div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Category filter</b><span class="t">Same categories as the game’s policy tray.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>One card per policy (17)</b><span class="t">Summary and SDG chips. The SDGs page links straight to each card (/learn#id).</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>In the real world</b><span class="t">What Taiwan and other countries are actually doing.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>The tradeoff</b><span class="t">Why it isn’t an easy yes. Nuclear, for example, shows both sides.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>In the game</b><span class="t">The exact cost and effects, the same numbers as on the card.</span></div></div>
+      <div class="note planned"><div class="n">6</div><div><b>Planned: official sources</b><span class="t">A link to an official source under every fact once it has been checked (22 facts listed in sources.md).</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 06 SDGS ═════════════════════════ -->
+<section class="canvas" id="sdgs">
+  <div class="chead"><span class="cnum">06 / 08</span><span class="ctitle">The SDGs</span><span class="route">/sdgs</span><span class="status ok">✅ Built</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /sdgs</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span><u>The SDGs</u></span><span>Hall of Islands</span><span>About</span></div><span class="bt pri sm">Play</span></div>
+        <div class="rel" style="padding:18px 34px 12px"><span class="mk" style="left:6px;top:15px">1</span>
+          <span class="k">The Sustainable Development Goals</span>
+          <div class="h1">17 goals for the world. 6 for one island.</div>
+          <div class="tl two" style="width:78%;margin-top:6px"></div>
+        </div>
+        <div class="col" style="padding:0 34px;gap:9px">
+          <div class="row rel" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px"><span class="mk" style="left:-30px;top:30px">2</span>
+            <div style="width:74px;border-radius:5px 0 0 5px;background:#ccc;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:22px">7</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Affordable &amp; Clean Energy</div><div class="tl one" style="width:85%;margin:5px 0 8px"></div>
+              <div class="g" style="grid-template-columns:1fr 1.4fr;gap:16px">
+                <div class="rel"><span class="mk r" style="top:-4px">3</span><b style="font-size:9.5px">How the game measures it</b><div class="tl one" style="margin-top:4px"></div></div>
+                <div class="rel"><span class="mk r" style="top:-4px">4</span><b style="font-size:9.5px">Policies that help</b><div style="font-size:9.5px;margin-top:3px;color:#335"><u>🌬️ Offshore Wind</u>, <u>☀️ Rooftop Solar</u>, <u>🔋 Battery Storage</u>, <u>🌬️ Wind Phase 2</u></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px;overflow:hidden">
+            <div style="width:74px;background:#bbb;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:22px">13</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Climate Action</div><div class="tl one" style="width:80%;margin:5px 0 8px"></div>
+              <div class="g" style="grid-template-columns:1fr 1.4fr;gap:16px"><div><b style="font-size:9.5px">How the game measures it</b><div class="tl one" style="margin-top:4px"></div></div><div><b style="font-size:9.5px">Policies that help</b><div class="tl one" style="margin-top:4px"></div></div></div>
+            </div>
+          </div>
+          <div class="row" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px;overflow:hidden">
+            <div style="width:74px;background:#d4d4d4;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:22px">11</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Sustainable Cities &amp; Communities</div><div class="tl one" style="width:75%;margin:5px 0 8px"></div>
+              <div class="g" style="grid-template-columns:1fr 1.4fr;gap:16px"><div><b style="font-size:9.5px">How the game measures it</b><div class="tl one" style="margin-top:4px"></div></div><div><b style="font-size:9.5px">Policies that help</b><div class="tl one" style="margin-top:4px"></div></div></div>
+            </div>
+          </div>
+          <div class="row" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px;overflow:hidden;height:52px">
+            <div style="width:74px;background:#c4c4c4;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:22px">6</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Clean Water &amp; Sanitation</div><div class="tl one" style="width:70%;margin-top:5px"></div></div>
+          </div>
+          <div class="row" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px;overflow:hidden;height:52px">
+            <div style="width:74px;background:#b0b0b0;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:22px">8</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Decent Work &amp; Economic Growth</div><div class="tl one" style="width:72%;margin-top:5px"></div></div>
+          </div>
+          <div class="row" style="gap:14px;align-items:stretch;background:#fff;border:1.5px solid var(--line);border-radius:6px;overflow:hidden;height:52px">
+            <div style="width:74px;background:#c8c8c8;display:grid;place-items:center;text-align:center;font-weight:800"><div><div style="font-size:8px">SDG</div><div style="font-size:19px">14·15</div></div></div>
+            <div class="grow" style="padding:9px 12px 9px 0"><div class="h3" style="font-size:13px">Life Below Water &amp; Life on Land</div><div class="tl one" style="width:66%;margin-top:5px"></div></div>
+          </div>
+          <div class="bx wh rel" style="padding:12px 16px"><span class="mk">5</span>
+            <div class="h2">Why you can’t max out everything</div>
+            <div class="tl" style="margin-top:6px"></div>
+            <div style="font-size:10px;margin-top:2px;color:#335"><u>Read about all 17 goals at the United Nations ↗</u></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Intro</b><span class="t">What the 17 SDGs are (UN, 2015) and why the game follows 6 of them.</span></div></div>
+      <div class="note"><div class="n">2</div><div><b>One row per goal</b><span class="t">Badge in the official UN color, the goal’s name and why it matters for an island.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>How it’s measured</b><span class="t">Which game stats make up the score, e.g. SDG 7 = renewable share.</span></div></div>
+      <div class="note"><div class="n">4</div><div><b>Policies that help</b><span class="t">Generated from the policy data, so new policies appear here automatically. Each links to its Learn card.</span></div></div>
+      <div class="note"><div class="n">5</div><div><b>The tradeoffs</b><span class="t">The core message: fabs vs water, sea walls vs coastal life, coal vs jobs.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 07 HALL ═════════════════════════ -->
+<section class="canvas" id="hall">
+  <div class="chead"><span class="cnum">07 / 08</span><span class="ctitle">Hall of Islands</span><span class="route">/hall</span><span class="status part">🟡 Local results built · global planned (Dec)</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /hall</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span><u>Hall of Islands</u></span><span>About</span></div><span class="bt pri sm">Play</span></div>
+        <div style="padding:18px 34px 10px">
+          <span class="k">Hall of Islands</span>
+          <div class="h1">Islands that came before</div>
+          <div class="tl one" style="width:45%;margin-top:6px"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:16px;padding:6px 34px">
+          <div class="col" style="gap:10px">
+            <div class="row rel plan" style="width:fit-content;padding:4px;border-radius:999px;gap:4px"><span class="mk p">2</span><span class="tab on">🌐 All players</span><span class="tab">💻 This browser</span></div>
+            <div class="bx wh rel" style="padding:10px 12px"><span class="mk">1</span>
+              <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;font-size:9px;font-weight:700;color:#666;border-bottom:1.2px solid #999;padding-bottom:5px"><span>#</span><span>Island</span><span>Ending</span><span>Score</span><span>Difficulty</span><span>Played</span></div>
+              <div class="col" style="gap:0">
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">1</span><b>Formosa Verde</b><span class="chip">🌏 Green Haven</span><b style="font-size:13px">86</b><span>Hard</span><span class="mut">Nov 8</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">2</span><b>Penglai</b><span class="chip">🌏 Green Haven</span><b style="font-size:13px">79</b><span>Standard</span><span class="mut">Nov 7</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">3</span><b>Little Kinmen</b><span class="chip">⚖️ Balanced Future</span><b style="font-size:13px">68</b><span>Standard</span><span class="mut">Nov 7</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">4</span><b>Isla Verde</b><span class="chip">🌏 Green Haven</span><b style="font-size:13px">66</b><span>Relaxed</span><span class="mut">Nov 7</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">5</span><b>Penghu II</b><span class="chip">⚖️ Balanced Future</span><b style="font-size:13px">61</b><span>Standard</span><span class="mut">Nov 6</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">6</span><b>Typhoon Bay</b><span class="chip">🌊 Sinking Island</span><b style="font-size:13px">48</b><span>Hard</span><span class="mut">Nov 6</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;border-bottom:1px solid #e3e3e3;align-items:center"><span class="mut">7</span><b>Coal Rock <span class="mut" style="font-weight:400">(until 2038)</span></b><span class="chip">🗳️ Voted Out</span><b style="font-size:13px">41</b><span>Hard</span><span class="mut">Nov 6</span></div>
+                <div class="g" style="grid-template-columns:22px 1.3fr 1.5fr 44px 64px 64px;gap:6px;padding:6px 0;align-items:center"><span class="mut">8</span><b>Penglai</b><span class="chip">💰 Rich but Burning</span><b style="font-size:13px">37</b><span>Relaxed</span><span class="mut">Nov 5</span></div>
+              </div>
+              <div class="row" style="margin-top:6px"><span class="bt sm" style="margin-left:auto">Clear history</span></div>
+            </div>
+          </div>
+          <div class="col" style="gap:12px">
+            <div class="bx rel plan" style="padding:12px"><span class="mk p">3</span><span class="ptag">PLANNED</span>
+              <div class="h3">What other leaders chose</div>
+              <div class="col" style="gap:9px;margin-top:8px">
+                <div><b style="font-size:16px">68%</b> <span class="mut">kept the coal plant running past 2040</span></div>
+                <div><b style="font-size:16px">41%</b> <span class="mut">built a sea wall instead of wetlands</span></div>
+                <div><b style="font-size:16px">23%</b> <span class="mut">voted to restart nuclear power</span></div>
+                <div><b style="font-size:16px">57%</b> <span class="mut">cut water to the chip fabs in the drought</span></div>
+                <div><b style="font-size:16px">12</b> <span class="mut">policies passed on average</span></div>
+              </div>
+            </div>
+            <div class="bx rel plan" style="padding:12px"><span class="mk p">4</span><span class="ptag">PLANNED</span>
+              <div class="h3">How all islands ended</div>
+              <div class="col" style="gap:5px;margin-top:8px;font-size:9.5px">
+                <div class="row" style="gap:6px"><span style="width:84px">🌏 Green Haven</span><div class="meter grow" style="--v:38%"></div></div>
+                <div class="row" style="gap:6px"><span style="width:84px">⚖️ Balanced</span><div class="meter grow" style="--v:30%"></div></div>
+                <div class="row" style="gap:6px"><span style="width:84px">🗳️ Voted Out</span><div class="meter grow" style="--v:17%"></div></div>
+                <div class="row" style="gap:6px"><span style="width:84px">💰 Rich but Burning</span><div class="meter grow" style="--v:9%"></div></div>
+                <div class="row" style="gap:6px"><span style="width:84px">other</span><div class="meter grow" style="--v:6%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note"><div class="n">1</div><div><b>Results table (built)</b><span class="t">Every finished game, ranked by SDG score: island, ending, score, difficulty, date. Saved in the browser (localStorage) and can be cleared.</span></div></div>
+      <div class="note planned"><div class="n">2</div><div><b>Planned: global leaderboard</b><span class="t">Switch between all players and this browser. Results are sent to an online database (Supabase) when a game ends.</span></div></div>
+      <div class="note planned"><div class="n">3</div><div><b>Planned: “what others chose”</b><span class="t">The % of all players who picked each option, so you can compare your choices with everyone else’s.</span></div></div>
+      <div class="note planned"><div class="n">4</div><div><b>Planned: ending breakdown</b><span class="t">How often each of the 6 endings happens across all players.</span></div></div>
+      <p style="font-size:13px;color:#777;margin:4px 0 0">Example numbers in the planned panels are placeholders.</p>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ 08 ABOUT ═════════════════════════ -->
+<section class="canvas" id="about">
+  <div class="chead"><span class="cnum">08 / 08</span><span class="ctitle">About</span><span class="route">/about</span><span class="status part">🟡 Draft · text and sources to add</span></div>
+  <div class="cbody">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><div class="url">island-2050 /about</div></div>
+      <div class="vp" style="background:#f7f7f4">
+        <div class="nav"><span class="logo">◐ Island 2050</span><div class="nlinks"><span>Learn</span><span>The SDGs</span><span>Hall of Islands</span><span><u>About</u></span></div><span class="bt pri sm">Play</span></div>
+        <div style="padding:18px 60px 10px">
+          <span class="k">About</span>
+          <div class="h1">Behind Island 2050</div>
+          <div class="tl one" style="width:45%;margin-top:6px"></div>
+        </div>
+        <div class="col" style="padding:4px 60px;gap:12px">
+          <div class="bx wh rel plan row" style="padding:14px 16px;gap:18px;align-items:flex-start"><span class="mk p">1</span><span class="ptag">TO WRITE</span>
+            <div class="col" style="align-items:center;gap:6px;flex:none">
+              <div class="ph circ" style="width:84px;height:84px"><span>photo</span></div>
+              <div class="row" style="gap:3px"><div class="ph circ" style="width:22px;height:22px"></div><div class="ph circ" style="width:22px;height:22px"></div><div class="ph circ" style="width:22px;height:22px"></div><div class="ph circ" style="width:22px;height:22px"></div><div class="ph circ" style="width:22px;height:22px"></div></div>
+            </div>
+            <div class="col grow" style="gap:6px"><div class="h2">The creator</div><div class="tl"></div><div class="tl two" style="width:70%"></div><span class="mut" style="font-size:9.5px">“Every citizen in the game is played by me”</span></div>
+          </div>
+          <div class="bx wh rel plan" style="padding:12px 16px"><span class="mk p">2</span><span class="ptag">TO WRITE</span>
+            <div class="h2">Why I made this</div><div class="tl" style="margin-top:6px"></div>
+          </div>
+          <div class="bx wh rel" style="padding:12px 16px"><span class="mk">3</span>
+            <div class="h2">How it was built</div>
+            <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:7px"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">React Router</span><span class="chip">Framer Motion</span><span class="chip">Recharts</span><span class="chip">SVG</span><span class="chip">localStorage</span><span class="chip plan">Supabase</span></div>
+            <div class="tl two" style="margin-top:8px;width:88%"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:12px">
+            <div class="bx wh rel plan" style="padding:12px 16px"><span class="mk p">4</span><span class="ptag">PLANNED</span>
+              <div class="h2">Sources</div>
+              <div class="col" style="gap:5px;margin-top:6px;font-size:9.5px;color:#335">
+                <u>National Development Council: Net-Zero 2050 ↗</u><u>Ministry of Environment: carbon fee ↗</u><u>Water Resources Agency: 2021 drought ↗</u><u>UN Sustainable Development Goals ↗</u>
+              </div>
+            </div>
+            <div class="bx wh rel plan" style="padding:12px 16px"><span class="mk p">5</span><span class="ptag">PLANNED</span>
+              <div class="h2">Credits &amp; AI use</div>
+              <div class="tl" style="margin-top:6px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <h3>What’s on the page</h3>
+      <div class="note planned"><div class="n">1</div><div><b>The creator (to write)</b><span class="t">Photo and intro in the creator’s own words, plus the fact that all 5 citizens are the creator.</span></div></div>
+      <div class="note planned"><div class="n">2</div><div><b>Why I made this (to write)</b><span class="t">Why a game, why an island, and the main takeaway: sustainability is about tradeoffs.</span></div></div>
+      <div class="note"><div class="n">3</div><div><b>How it was built (done)</b><span class="t">The tech stack and the idea of a separate engine: “the engine is the rules, React is the screen”.</span></div></div>
+      <div class="note planned"><div class="n">4</div><div><b>Planned: sources</b><span class="t">Official links for every fact on the Learn page, once verified.</span></div></div>
+      <div class="note planned"><div class="n">5</div><div><b>Planned: credits &amp; AI use</b><span class="t">Fonts and libraries, and an honest note on how AI helped write the code.</span></div></div>
+      <div class="legend"><span><span class="sw"></span>built</span><span><span class="sw p"></span>planned / to write</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ?only=home → show just that canvas (used by render.sh for the PNGs)
+  const only = new URLSearchParams(location.search).get('only');
+  if (only) {
+    document.body.classList.add('only');
+    document.querySelector('.doc-title').remove();
+    document.querySelectorAll('.canvas').forEach((c) => { if (c.id !== only) c.remove(); });
+  }
+</script>
+</body>
+</html>

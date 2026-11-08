@@ -159,7 +159,7 @@ Green Haven · Balanced Future · Rich but Burning · Sinking Island · Struggli
   After END TERM: Event modal → Term report (stat changes + citizen faces) → next term
 ```
 
-Wireframes for the other pages are drawn for the slides (see `project-log/`).
+Wireframes for all 8 pages (plus a site map and the turn loop) are in [`wireframes/`](wireframes/): open `index.html`, or use the PNGs in `wireframes/png/` for the slides.
 
 ---
 
@@ -169,7 +169,7 @@ Wireframes for the other pages are drawn for the slides (see `project-log/`).
 |---|---|---|
 | Nov 5 | Plan, base website (engine, 9 policies, 8 events, all 8 pages) | ✅ |
 | Nov 6 | Phase 2: 17 policies, 13 events, tutorial, tray filters, balance script, git | ✅ |
-| Nov 7–19 | Deploy (GitHub + Vercel), wireframes for all pages, fact verification, About page | ⏳ |
+| Nov 7–19 | Deploy (GitHub ✅ + Vercel), wireframes for all pages ✅, fact verification, About page | ⏳ |
 | Nov 20–26 | Slides, rehearse the live demo | |
 | **Nov 27** | **Submit slides by 23:59 + present** | |
 | Nov 28–Dec 4 | Supabase global leaderboard + "% of players chose X" stats | |

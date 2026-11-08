@@ -4,6 +4,24 @@ Newest entry at the top.
 
 ---
 
+## 2026-11-08 · Session 3: Wireframes
+
+**Done**
+- **GitHub:** the project is pushed (`main` and `phase-2`). Vercel still needs to be connected.
+- **Wireframes** for all 8 pages in `docs/wireframes/`: one HTML file (`index.html`) and 10 slide-ready PNGs (16:9) in `png/`.
+  The set is a site map, Home, Setup, Game (dashboard + the turn loop step by step), Results, Learn, SDGs, Hall and About.
+  Each has numbered notes. Coral dashed boxes mark what is still planned (global leaderboard, "% of players chose X",
+  source links, About text). `render.sh` regenerates the PNGs after a change.
+- Removed an outdated banner on the Learn page that still said EV subsidies, battery storage, nuclear and
+  reforestation were "coming" (they were added in session 2).
+
+**Next**
+- Connect Vercel to the GitHub repo to get a live URL.
+- Slides for Nov 27 (the wireframe PNGs go straight in).
+- Me: verify ⚠️ facts in `sources.md`, write the About page.
+
+---
+
 ## 2026-11-06 · Session 2: Phase 2, depth and polish
 
 **Plan:** wrote the phase 2 plan (content, balance, tutorial, deploy, then demo deliverables). Decided: laptop/desktop only,

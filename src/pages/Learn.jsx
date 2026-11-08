@@ -85,8 +85,7 @@ export default function Learn() {
         </AnimatePresence>
 
         <div className="wip-banner">
-          🚧 <b>Work in progress:</b> more policies (EV subsidies, battery storage, a nuclear referendum, reforestation…)
-          and links to official sources are coming in the final version.
+          🚧 <b>Work in progress:</b> links to an official source for every fact are coming in the final version.
         </div>
 
         <div className="content-cta">
