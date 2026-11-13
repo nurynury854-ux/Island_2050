@@ -1,4 +1,4 @@
-// ✏️ This page is a DRAFT. The parts marked "write in your own words" are for you to fill in.
+// About page. The creator and "why" texts are Nury's own words. The Sources section is filled in for the final version.
 import { Link } from 'react-router-dom';
 import CitizenAvatar from '../components/CitizenAvatar.jsx';
 import './Content.css';
@@ -27,18 +27,28 @@ export default function About() {
           <CitizenAvatar id="advisor" mood="happy" size={120} showBadge={false} />
           <div>
             <h2>The creator</h2>
-            <p className="placeholder">
-              ✏️ Write in your own words: who you are, your major and year, and the fun fact that every citizen in the game
-              is played by you.
+            <p>
+              My name is Nursoltan (Nury), and I’m currently an Informatics student at YZU. Every citizen in the game is
+              played by me, so you can enjoy me in different costumes there, heheh.
             </p>
           </div>
         </section>
 
         <section className="card">
           <h2>Why I made this</h2>
-          <p className="placeholder">
-            ✏️ Write in your own words: why a game instead of an info page, why an island, and what you want players to take
-            away (sustainability is about tradeoffs, not easy answers).
+          <p>
+            Well, I’ve always wondered why some politicians make certain decisions, and what would have happened if they had
+            made the decision I wanted. So I made a game, or you could say a simulator, that simulates the decisions you make
+            and shows you their results and consequences.
+          </p>
+          <p>
+            This way, players can learn and realize that every decision has a reason behind it, because it affects something
+            else. Every SDG improvement leads to something else being affected. The main message I want players to take away
+            is that sustainability is about tradeoffs, and everything requires a sacrifice.
+          </p>
+          <p>
+            As for why an island: managing an entire country would be complicated, so a simple island is a good starting
+            point, hehehe.
           </p>
         </section>
 

@@ -4,6 +4,18 @@ Newest entry at the top.
 
 ---
 
+## 2026-11-13 · Session 5: About page
+
+**Done**
+- **About page:** "The creator" and "Why I made this" are now in my own words (only small grammar fixes).
+  The Sources section stays a placeholder until the facts are verified for the final version.
+
+**Next**
+- Me: rehearse once with the notes (N) and time it.
+- After Nov 27: citizen photos, verify ⚠️ facts in `sources.md`, global leaderboard.
+
+---
+
 ## 2026-11-08 · Session 4: Presentation page
 
 **Done**
